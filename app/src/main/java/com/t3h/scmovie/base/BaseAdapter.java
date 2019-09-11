@@ -1,4 +1,4 @@
-package base;
+package com.t3h.scmovie.base;
 
 import android.content.Context;
 import android.view.LayoutInflater;
