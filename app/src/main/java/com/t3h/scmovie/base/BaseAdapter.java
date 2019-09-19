@@ -16,10 +16,15 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     private LayoutInflater inflater;
     private int layoutId;
     private List<M> data;
-    private BaseitemListener listener;
+    private BaseItemListener listener;
     public BaseAdapter(Context context, @LayoutRes int layoutId) {
         inflater = LayoutInflater.from(context);
         this.layoutId = layoutId;
+    }
+
+    public void setData(List<M> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,5 +56,5 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
         }
     }
 
-    public interface BaseitemListener { }
+    public interface BaseItemListener { }
 }
