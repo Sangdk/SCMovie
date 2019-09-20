@@ -2,18 +2,11 @@ package com.t3h.scmovie.activity;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import androidx.transition.ArcMotion;
-import androidx.transition.ChangeBounds;
-import androidx.transition.TransitionManager;
 
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
