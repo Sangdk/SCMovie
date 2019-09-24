@@ -28,8 +28,7 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
     }
 
     public void setMovies(List<Movie> mMovies) {
-        mMovies.clear();
-        mMovies.addAll(mMovies);
+        this.mMovies = mMovies;
         notifyDataSetChanged();
     }
 

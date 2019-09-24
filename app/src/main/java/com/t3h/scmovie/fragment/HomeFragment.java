@@ -1,13 +1,17 @@
 package com.t3h.scmovie.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.Slide;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.palette.graphics.Palette;
 
 import com.t3h.scmovie.R;
+import com.t3h.scmovie.activity.MainActivity;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
@@ -54,16 +58,36 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
         binding.recyclerFamousActor.setAdapter(adapter);
+//        initView();
+    }
+
+    private void initView() {
+//        MainActivity main = (MainActivity) getActivity();
+//        main.setSupportActionBar(binding.toolbar);
+//        if (main.getSupportActionBar() != null){
+//            main.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),);
+//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//            @Override
+//            public void onGenerated(@Nullable Palette palette) {
+//                int vibrantColor = palette.getVibrantColor(getResources().getColor(R.color.primary_500));
+//                binding.collapsingToolbar.setContentScrimColor(vibrantColor);
+//                binding.collapsingToolbar.setStatusBarScrimColor(getResources().getColor(R.color.black_trans80));
+//            }
+//        });
     }
 
     private void initDataForSlide() {
         mSlideAdapter = new SlideAdapter(getContext());
+        Log.d("Home: data ",""+data.size());
         for (int i = 0; i < 5; i++) {
             mSlideMovies.add(data.get(i));
         }
         mSlideAdapter.setMovies(mSlideMovies);
         binding.viewPager.setAdapter(mSlideAdapter);
         initSlideTimer();
+        Log.d("Home: slide ",""+mSlideMovies.size());
     }
 
     private void initSlideTimer() {

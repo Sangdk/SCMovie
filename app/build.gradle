@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.t3h.scmovie"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.0-alpha02'
     annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha02'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.android.support:palette-v7:+'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
