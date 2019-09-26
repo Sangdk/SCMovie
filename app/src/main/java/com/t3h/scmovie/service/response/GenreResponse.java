@@ -9,14 +9,11 @@ public class GenreResponse {
     @SerializedName("genres")
     private List<Genre> mGenres;
 
-    public GenreResponse() {
-    }
-
     public List<Genre> getGenres() {
         return mGenres;
     }
 
     public void setGenres(List<Genre> genres) {
-        mGenres = genres;
+        this.mGenres = genres;
     }
 }
