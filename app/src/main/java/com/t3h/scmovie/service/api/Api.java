@@ -1,12 +1,9 @@
 package com.t3h.scmovie.service.api;
 
-import com.t3h.scmovie.data.model.Actor;
-import com.t3h.scmovie.data.model.Movie;
+import com.t3h.scmovie.model.Actor;
+import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.service.response.GenreResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -23,6 +20,21 @@ public interface Api {
 
     @GET("movie/now_playing")
     Call<MovieResponse> getMoviesNowPlaying(
+            @Query("language") String lang,
+            @Query("page") int page,
+            @Query("api_key") String apiKey
+
+    );
+    @GET("movie/popular")
+    Call<MovieResponse> getMoviesPopular(
+            @Query("language") String lang,
+            @Query("page") int page,
+            @Query("api_key") String apiKey
+
+    );
+
+    @GET("movie/top_rated")
+    Call<MovieResponse> getMoviesTopRated(
             @Query("language") String lang,
             @Query("page") int page,
             @Query("api_key") String apiKey

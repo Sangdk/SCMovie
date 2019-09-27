@@ -1,7 +1,7 @@
 package com.t3h.scmovie.service.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.t3h.scmovie.data.model.Genre;
+import com.t3h.scmovie.model.Genre;
 
 import java.util.List;
 

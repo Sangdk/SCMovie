@@ -12,7 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.t3h.scmovie.Const;
 import com.t3h.scmovie.R;
-import com.t3h.scmovie.data.model.Movie;
+import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.databinding.ItemSlideBinding;
 
 import java.util.ArrayList;
@@ -28,8 +28,7 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
     }
 
     public void setMovies(List<Movie> mMovies) {
-        mMovies.clear();
-        mMovies.addAll(mMovies);
+        this.mMovies = mMovies;
         notifyDataSetChanged();
     }
 
@@ -45,10 +44,10 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
 
     private void bindData(Movie movie) {
         Glide.with(mBinding.imageSlide)
-                .load(Const.BASE_IMAGE_URL + movie.getmPosterPath())
+                .load(Const.BASE_IMAGE_URL + movie.getPosterPatch())
                 .into(mBinding.imageSlide);
-        mBinding.textTitle.setText(movie.getmTitle());
-        mBinding.textReleaseDate.setText(movie.getmReleaseDate());
+        mBinding.textTitle.setText(movie.getTitle());
+        mBinding.textReleaseDate.setText(movie.getReleaseDate());
     }
 
     @Override

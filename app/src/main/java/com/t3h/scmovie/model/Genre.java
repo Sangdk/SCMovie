@@ -1,4 +1,4 @@
-package com.t3h.scmovie.data.model;
+package com.t3h.scmovie.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.t3h.scmovie.base.BaseModel;
