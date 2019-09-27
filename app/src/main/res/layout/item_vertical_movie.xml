@@ -19,7 +19,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_190"
+            android:layout_height="@dimen/dp_200"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_5"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
                 <TextView
                     android:id="@+id/text_title"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_below="@id/img_poster"
                     android:background="@android:color/black"
                     android:ellipsize="marquee"

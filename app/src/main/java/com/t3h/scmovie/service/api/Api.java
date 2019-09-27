@@ -2,6 +2,7 @@ package com.t3h.scmovie.service.api;
 
 import com.t3h.scmovie.model.Actor;
 import com.t3h.scmovie.model.Movie;
+import com.t3h.scmovie.service.response.ActorResponse;
 import com.t3h.scmovie.service.response.GenreResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
 
@@ -25,6 +26,7 @@ public interface Api {
             @Query("api_key") String apiKey
 
     );
+
     @GET("movie/popular")
     Call<MovieResponse> getMoviesPopular(
             @Query("language") String lang,
@@ -39,6 +41,13 @@ public interface Api {
             @Query("page") int page,
             @Query("api_key") String apiKey
 
+    );
+
+    @GET("person/popular")
+    Call<ActorResponse> getActorsPopular(
+            @Query("language") String lang,
+            @Query("page") int page,
+            @Query("api_key") String apiKey
     );
 
     @GET("genre/movie/list")

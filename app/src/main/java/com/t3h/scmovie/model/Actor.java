@@ -3,117 +3,83 @@ package com.t3h.scmovie.model;
 import com.google.gson.annotations.SerializedName;
 import com.t3h.scmovie.base.BaseModel;
 
+import java.util.ArrayList;
+
 public class Actor extends BaseModel {
     @SerializedName("id")
-    private String mId;
+    private String id;
 
     @SerializedName("name")
-    private String mName;
+    private String name;
 
     @SerializedName("profile_path")
-    private String mProfilePath;
-
-    @SerializedName("character")
-    private String mCharacter;
-
-    @SerializedName("birthday")
-    private String mBirthday;
-
-    @SerializedName("biography")
-    private String mBiography;
-
-    @SerializedName("place_of_birth")
-    private String mPlace;
+    private String profilePatch;
 
     @SerializedName("popularity")
-    private String mPopularity;
+    private String popularity;
 
     @SerializedName("gender")
-    private String mGender;
+    private int gender;
+
+    @SerializedName("known_for")
+    private ArrayList<Movie> knowFor;
 
     @SerializedName("known_for_department")
-    private String mDepartment;
+    private String knowForDepartment;
 
-    public Actor() {
+    public String getKnowForDepartment() {
+        return knowForDepartment;
+    }
+
+    public void setKnowForDepartment(String knowForDepartment) {
+        this.knowForDepartment = knowForDepartment;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
-    public String getProfilePath() {
-        return mProfilePath;
+    public String getProfilePatch() {
+        return profilePatch;
     }
 
-    public void setProfilePath(String profilePath) {
-        mProfilePath = profilePath;
-    }
-
-    public String getCharacter() {
-        return mCharacter;
-    }
-
-    public void setCharacter(String character) {
-        mCharacter = character;
-    }
-
-    public String getBirthday() {
-        return mBirthday;
-    }
-
-    public void setBirthday(String birthday) {
-        mBirthday = birthday;
-    }
-
-    public String getBiography() {
-        return mBiography;
-    }
-
-    public void setBiography(String biography) {
-        mBiography = biography;
-    }
-
-    public String getPlace() {
-        return mPlace;
-    }
-
-    public void setPlace(String place) {
-        mPlace = place;
+    public void setProfilePatch(String profilePatch) {
+        this.profilePatch = profilePatch;
     }
 
     public String getPopularity() {
-        return mPopularity;
+        return popularity;
     }
 
     public void setPopularity(String popularity) {
-        mPopularity = popularity;
+        this.popularity = popularity;
     }
 
-    public String getGender() {
-        return mGender;
+    public int getGender() {
+        return gender;
     }
 
-    public void setGender(String gender) {
-        mGender = gender;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
-    public String getDepartment() {
-        return mDepartment;
+    public ArrayList<Movie> getKnowFor() {
+        return knowFor;
     }
 
-    public void setDepartment(String department) {
-        mDepartment = department;
+    public void setKnowFor(ArrayList<Movie> knowFor) {
+        this.knowFor = knowFor;
     }
 }
