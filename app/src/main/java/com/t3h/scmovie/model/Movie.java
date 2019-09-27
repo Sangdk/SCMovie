@@ -7,8 +7,8 @@ public class Movie extends BaseModel {
     @SerializedName("id")
     private int id;
 
-    @SerializedName("backdrop_patch")
-    private int backdropPatch;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
 
     @SerializedName("title")
     private String title;
@@ -17,7 +17,7 @@ public class Movie extends BaseModel {
     private String overView;
 
     @SerializedName("poster_path")
-    private String posterPatch;
+    private String posterPath;
 
     @SerializedName("release_date")
     private String releaseDate;
@@ -33,12 +33,12 @@ public class Movie extends BaseModel {
         this.id = id;
     }
 
-    public int getBackdropPatch() {
-        return backdropPatch;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdropPatch(int backdropPatch) {
-        this.backdropPatch = backdropPatch;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
     public String getTitle() {
@@ -57,12 +57,12 @@ public class Movie extends BaseModel {
         this.overView = overView;
     }
 
-    public String getPosterPatch() {
-        return posterPatch;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPosterPatch(String posterPatch) {
-        this.posterPatch = posterPatch;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
     public String getReleaseDate() {

@@ -2,9 +2,11 @@ package com.t3h.scmovie.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
@@ -48,6 +50,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         adapter_movie_popular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         adapter_top_rated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         adapter_actor_popular = new BaseAdapter<>(getContext(), R.layout.item_actor);
+        initToolBar();
         ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -69,7 +72,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
             }
         });
 
@@ -109,6 +111,24 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
+    }
+
+    private void initToolBar() {
+        binding.appBarLayout.addOnOffsetChangedListener(
+                new AppBarLayout.OnOffsetChangedListener() {
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (Math.abs(verticalOffset) > 200) {
+                            binding.collapsingToolbar.setTitleEnabled(true);
+                            binding.collapsingToolbar.setTitle("Home");
+                            binding.viewPager.setVisibility(View.GONE);
+                        } else {
+                            binding.collapsingToolbar.setTitleEnabled(false);
+                            binding.viewPager.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        );
     }
 
     private void initDataForActor(Response<ActorResponse> response) {
