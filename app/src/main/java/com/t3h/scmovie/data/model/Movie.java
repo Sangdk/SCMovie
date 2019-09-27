@@ -8,7 +8,7 @@ public class Movie extends BaseModel {
     private int mId;
 
     @SerializedName("backdrop_patch")
-    private int mBackdropPatch;
+    private String mBackdropPatch;
 
     @SerializedName("title")
     private String mTitle;
@@ -33,11 +33,18 @@ public class Movie extends BaseModel {
         this.mId = mId;
     }
 
+    public String getmBackdropPatch() {
+        return mBackdropPatch;
+    }
+
+    public void setmBackdropPatch(String mBackdropPatch) {
+      
     public int getmBackdropPatch() {
         return mBackdropPatch;
     }
 
     public void setmBackdropPatch(int mBackdropPatch) {
+
         this.mBackdropPatch = mBackdropPatch;
     }
 

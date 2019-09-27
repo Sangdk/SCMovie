@@ -29,8 +29,19 @@ public interface Api {
 
     );
 
+    @GET("movie/popular")
+    Call<MovieResponse> getMoviesPopular(
+            @Query("api_key") String apiKey,
+            @Query("language") String lang,
+            @Query("page") int page
+
+    );
+
     @GET("genre/movie/list")
-    Call<GenreResponse> getGenres();
+    Call<GenreResponse> getGenres(
+            @Query("api_key") String apuKey,
+            @Query("language") String lang
+    );
 
     @GET("trending/movie/day")
     Call<MovieResponse> getMoviesTrending();
@@ -38,6 +49,7 @@ public interface Api {
     @GET("movie/{type}")
     Call<MovieResponse> getMoviesByCategory(@Query("language") String lang,
                                             @Query("api_key") String apiKey,
+                                            @Query("type") String type,
                                             @Query("page") int page);
 
     @GET("discover/movie")
