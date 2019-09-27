@@ -129,9 +129,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
                     }
                 }
         );
-        binding.viewPager.setPadding(40,20,40,20);
+        binding.viewPager.setPadding(80,40,80,20);
         binding.viewPager.setClipToPadding(false);
-        binding.viewPager.setPageMargin(20);
+        binding.viewPager.setPageMargin(40);
     }
 
     private void initDataForActor(Response<ActorResponse> response) {
