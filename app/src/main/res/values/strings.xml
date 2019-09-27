@@ -8,4 +8,8 @@
     <string name="text_more">more</string>
     <string name="movie_name">movie name</string>
     <string name="tv_genre">Genres</string>
+    <string name="movie_up_coming">Phim sắp chiếu</string>
+    <string name="movie_now_playing">Phim đang chiếu</string>
+    <string name="movie_popular">Nhiều người xem</string>
+    <string name="movie_top_rated">Phim nổi bật</string>
 </resources>

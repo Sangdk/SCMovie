@@ -37,7 +37,7 @@ public class HomeViewModel extends ViewModel {
         ApiBuilder.getApi().getMoviesNowPlaying(mLang,1,apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                nowPlayingMovies.addAll(response.body().getMovies());
+//                nowPlayingMovies.addAll(response.body().getMovies());
                 categoryMovies.add(nowPlayingMovies);
                 categoryTitle.add(CategoyName.TITLE_NOW_PLAYING);
 
@@ -54,7 +54,7 @@ public class HomeViewModel extends ViewModel {
         ApiBuilder.getApi().getMoviesUpComing(mLang,1,apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                upComingMovies.addAll(response.body().getMovies());
+//                upComingMovies.addAll(response.body().getMovies());
                 categoryMovies.add(upComingMovies);
                 categoryTitle.add(CategoyName.TITLE_UP_COMING);
             }
@@ -70,7 +70,7 @@ public class HomeViewModel extends ViewModel {
         ApiBuilder.getApi().getMoviesPopular(apiKey,mLang,1).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                popularMovies.addAll(response.body().getMovies());
+//                popularMovies.addAll(response.body().getMovies());
                 categoryMovies.add(popularMovies);
                 categoryTitle.add(CategoyName.TITLE_POPULAR);
             }

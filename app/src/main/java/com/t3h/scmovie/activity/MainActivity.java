@@ -16,14 +16,13 @@ import com.t3h.scmovie.fragment.HomeFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private ActionBar actionBar;
     private HomeFragment mFragHome = new HomeFragment();
 
     @Override
     protected void initAct() {
-        actionBar = getSupportActionBar();
+//         = getSupportActionBar();
         binding.navigation.setOnNavigationItemSelectedListener(this);
-        actionBar.setTitle("Home");
+//        actionBar.setTitle("Home");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frame_container, mFragHome);
         transaction.show(mFragHome);
@@ -40,13 +39,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements B
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
-                actionBar.setTitle("Home");
+//                actionBar.setTitle("Home");
                 return true;
             case R.id.navigation_favorite:
-                actionBar.setTitle("Favorite");
+//                actionBar.setTitle("Favorite");
                 return true;
             case R.id.navigation_user:
-                actionBar.setTitle("User");
+//                actionBar.setTitle("User");
                 return true;
         }
         return false;

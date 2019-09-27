@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.t3h.scmovie.model.Movie" />
+    </data>
 
     <data>
         <import type="android.view.View"/>
@@ -14,6 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10">
@@ -33,7 +40,7 @@
 
                 <ImageView
                     android:id="@+id/img_poster"
-                    app:bindImage="@{viewmodel.backdropPath}"
+                    app:bindImage="@{item.backdropPath}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_170"
                     android:scaleType="centerCrop"
@@ -62,6 +69,25 @@
                         android:padding="@dimen/_2sdp"
                         android:textColor="@color/colorTextRate" />
                 </LinearLayout>
+                    app:thumb="@{item.posterPatch}" />
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_below="@id/img_poster"
+                    android:background="@android:color/black"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="@dimen/dp_2"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@{item.title}"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
