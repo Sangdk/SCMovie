@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.t3h.scmovie.R;
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements B
 
     private HomeFragment mFragHome = new HomeFragment();
 
+
     @Override
     protected void initAct() {
 //         = getSupportActionBar();
@@ -27,6 +29,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements B
         transaction.add(R.id.frame_container, mFragHome);
         transaction.show(mFragHome);
         transaction.commit();
+
+
     }
 
     @Override

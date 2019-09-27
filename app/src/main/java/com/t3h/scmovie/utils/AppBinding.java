@@ -1,4 +1,4 @@
-package com.t3h.scmovie;
+package com.t3h.scmovie.utils;
 
 import android.widget.ImageView;
 
@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 
-import static com.t3h.scmovie.Const.BASE_IMAGE_URL;
+import static com.t3h.scmovie.utils.Const.BASE_IMAGE_URL;
 
 public class AppBinding {
     @BindingAdapter("thumb")

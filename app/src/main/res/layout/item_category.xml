@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <import type="com.t3h.scmovie.data.model.Movie"/>
-        <variable
-            name="itemCategoryMovies"
-            type="java.util.List" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,7 +16,7 @@
             android:layout_marginStart="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="2dp"
-            android:text="@{item.name}"
+            android:text="@string/category_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,8 +33,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_movie"
-            app:bindCategoryMovies="@{itemCategoryMovies}"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

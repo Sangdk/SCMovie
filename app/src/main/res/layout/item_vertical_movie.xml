@@ -9,14 +9,6 @@
             type="com.t3h.scmovie.model.Movie" />
     </data>
 
-    <data>
-        <import type="android.view.View"/>
-
-        <variable
-            name="viewmodel"
-            type="com.t3h.scmovie.viewmodel.ItemMovieViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,9 +18,8 @@
         android:paddingBottom="@dimen/dp_10">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
             android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_220"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_5"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,35 +31,9 @@
 
                 <ImageView
                     android:id="@+id/img_poster"
-                    app:bindImage="@{item.backdropPath}"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_170"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_below="@+id/img_poster"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_poster"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_20"
-                        android:layout_above="@+id/tv_rate"
-                        android:padding="@dimen/dp_2"
-                        android:text="@{viewmodel.title}" />
-
-                    <TextView
-                        android:id="@+id/tv_rate"
-                        android:text="@{String.valueOf(viewModel.voteAverage)}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_2sdp"
-                        android:textColor="@color/colorTextRate" />
-                </LinearLayout>
                     app:thumb="@{item.posterPatch}" />
 
                 <TextView
@@ -90,7 +55,5 @@
                     android:textStyle="bold" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
-import com.t3h.scmovie.Const;
+import com.t3h.scmovie.utils.Const;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.databinding.ItemSlideBinding;
