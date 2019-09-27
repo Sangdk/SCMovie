@@ -38,6 +38,13 @@ public class Movie extends BaseModel {
     }
 
     public void setmBackdropPatch(String mBackdropPatch) {
+      
+    public int getmBackdropPatch() {
+        return mBackdropPatch;
+    }
+
+    public void setmBackdropPatch(int mBackdropPatch) {
+
         this.mBackdropPatch = mBackdropPatch;
     }
 

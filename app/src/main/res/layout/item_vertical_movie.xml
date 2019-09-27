@@ -42,6 +42,9 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_below="@+id/img_poster"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:padding="@dimen/dp_2"
                     android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
