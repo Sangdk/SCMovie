@@ -1,18 +1,11 @@
-package com.t3h.scmovie.activity;
+package com.t3h.scmovie.activity.home;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
-import com.t3h.scmovie.fragment.HomeFragment;
+import com.t3h.scmovie.fragment.home.HomeFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
 

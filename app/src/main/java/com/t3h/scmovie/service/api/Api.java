@@ -5,6 +5,7 @@ import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.service.response.ActorResponse;
 import com.t3h.scmovie.service.response.GenreResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
+import com.t3h.scmovie.service.response.VideoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -50,46 +51,15 @@ public interface Api {
             @Query("api_key") String apiKey
     );
 
-    @GET("genre/movie/list")
-    Call<GenreResponse> getGenres();
+    @GET("movie/{movie_id}/videos")
+    Call<VideoResponse> getVideos(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey
+    );
 
-    @GET("trending/movie/day")
-    Call<MovieResponse> getMoviesTrending();
-
-    @GET("movie/{type}")
-    Call<MovieResponse> getMoviesByCategory(@Query("language") String lang,
-                                            @Query("api_key") String apiKey,
-                                            @Query("page") int page);
-
-    @GET("discover/movie")
-    Call<MovieResponse> getMoviesByGenre(@Query("with_genres") String idGenre,
-                                         @Query("language") String lang,
-                                         @Query("api_key") String apiKey,
-                                         @Query("page") int page);
-
-    @GET("discover/movie")
-    Call<MovieResponse> getMoviesByCast(@Query("with_cast") String idCast,
-                                        @Query("language") String lang,
-                                        @Query("api_key") String apiKey,
-                                        @Query("page") int page);
-
-    @GET("discover/movie")
-    Call<MovieResponse> getMoviesByCompany(@Query("with_companies") int idCompany,
-                                           @Query("language") String lang,
-                                           @Query("api_key") String apiKey,
-                                           @Query("page") int page);
-
-    @GET("search/movie")
-    Call<MovieResponse> searchMovieByName(@Query("query") String key,
-                                          @Query("language") String lang,
-                                          @Query("api_key") String apiKey,
-                                          @Query("page") int page);
-
-    @GET("movie/{movie_id}?append_to_response=credits,videos")
-    Call<Movie> getMovieDetail(@Path("movie_id") int id,
-                               @Query("api_key") String apiKey);
-
-    @GET("person/{actor_id}")
-    Call<Actor> getProfile(@Path("actor_id") String actorId,
-                           @Query("api_key") String apiKey);
+    @GET("movie/{movie_id}")
+    Call<Movie> getMovieDetail(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey
+    );
 }

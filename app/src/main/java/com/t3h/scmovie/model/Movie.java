@@ -23,7 +23,18 @@ public class Movie extends BaseModel {
     private String releaseDate;
 
     @SerializedName("vote_average")
-    private double voteAverage;
+    private float voteAverage;
+
+    @SerializedName("runtime")
+    private int duration;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public int getId() {
         return id;
@@ -73,11 +84,11 @@ public class Movie extends BaseModel {
         this.releaseDate = releaseDate;
     }
 
-    public double getVoteAverage() {
+    public float getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setVoteAverage(float voteAverage) {
         this.voteAverage = voteAverage;
     }
 }

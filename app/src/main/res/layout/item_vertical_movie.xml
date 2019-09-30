@@ -7,12 +7,17 @@
         <variable
             name="item"
             type="com.t3h.scmovie.model.Movie" />
+
+        <variable
+            name="listener"
+            type="com.t3h.scmovie.fragment.home.MovieItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
+        android:onClick="@{v->listener.onMovieClick(item)}"
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10">

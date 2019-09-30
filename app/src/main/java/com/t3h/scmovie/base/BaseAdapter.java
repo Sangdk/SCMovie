@@ -33,6 +33,10 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
         notifyDataSetChanged();
     }
 
+    public void setListener(BaseItemListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public BaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,7 +53,7 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     public void onBindViewHolder(@NonNull BaseAdapter.BaseHolder holder, int position) {
         M item = data.get(position);
         holder.binding.setVariable(BR.item, item);
-//        holder.binding.setVariable(BR.listener, listener);
+        holder.binding.setVariable(BR.listener, listener);
         holder.binding.executePendingBindings();
     }
 

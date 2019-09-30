@@ -1,13 +1,14 @@
-package com.t3h.scmovie.fragment;
+package com.t3h.scmovie.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.t3h.scmovie.R;
+import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
@@ -27,9 +28,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
+import static com.t3h.scmovie.Const.API_KEY;
+import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
+
+public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
+        MovieItemClickListener {
     private String mLang = "vi";
-    private final String apiKey = "f565c6353149e1b97eb7f993217dafac";
     private List<Movie> data = new ArrayList<>();
     private BaseAdapter<Movie> adapter_now_playing;
     private BaseAdapter<Movie> adapter_up_coming;
@@ -51,7 +55,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         adapter_top_rated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         adapter_actor_popular = new BaseAdapter<>(getContext(), R.layout.item_actor);
         initToolBar();
-        ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
+        registerListener();
+        ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataNowPlaying(response);
@@ -64,7 +69,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
-        ApiBuilder.getApi().getMoviesUpComing(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().getMoviesUpComing(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataUpComing(response);
@@ -75,7 +80,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
-        ApiBuilder.getApi().getMoviesPopular(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().getMoviesPopular(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataPopular(response);
@@ -87,7 +92,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
-        ApiBuilder.getApi().getMoviesTopRated(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().getMoviesTopRated(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataTopRated(response);
@@ -99,7 +104,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
-        ApiBuilder.getApi().getActorsPopular(mLang, 1, apiKey).enqueue(new Callback<ActorResponse>() {
+        ApiBuilder.getApi().getActorsPopular(mLang, 1, API_KEY).enqueue(new Callback<ActorResponse>() {
             @Override
             public void onResponse(Call<ActorResponse> call, Response<ActorResponse> response) {
                 initDataForActor(response);
@@ -110,26 +115,30 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
             }
         });
+        binding.viewPager.setVisibility(View.VISIBLE);
+    }
 
+    private void registerListener() {
+        adapter_up_coming.setListener(this);
+        adapter_now_playing.setListener(this);
+        adapter_movie_popular.setListener(this);
+        adapter_top_rated.setListener(this);
     }
 
     private void initToolBar() {
         binding.appBarLayout.addOnOffsetChangedListener(
-                new AppBarLayout.OnOffsetChangedListener() {
-                    @Override
-                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                        if (Math.abs(verticalOffset) > 200) {
-                            binding.collapsingToolbar.setTitleEnabled(true);
-                            binding.collapsingToolbar.setTitle("Home");
-                            binding.viewPager.setVisibility(View.GONE);
-                        } else {
-                            binding.collapsingToolbar.setTitleEnabled(false);
-                            binding.viewPager.setVisibility(View.VISIBLE);
-                        }
+                (appBarLayout, verticalOffset) -> {
+                    if (Math.abs(verticalOffset) > 200) {
+                        binding.collapsingToolbar.setTitleEnabled(true);
+                        binding.collapsingToolbar.setTitle("Home");
+                        binding.viewPager.setVisibility(View.GONE);
+                    } else {
+                        binding.collapsingToolbar.setTitleEnabled(false);
+                        binding.viewPager.setVisibility(View.VISIBLE);
                     }
                 }
         );
-        binding.viewPager.setPadding(80,40,80,20);
+        binding.viewPager.setPadding(80, 40, 80, 20);
         binding.viewPager.setClipToPadding(false);
         binding.viewPager.setPageMargin(40);
     }
@@ -172,14 +181,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
 
     private void initSlideTimer() {
         final Handler handler = new Handler();
-        final Runnable update = new Runnable() {
-            @Override
-            public void run() {
-                if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
-                    mCurrentSlide = 0;
-                }
-                binding.viewPager.setCurrentItem(mCurrentSlide++, true);
+        final Runnable update = () -> {
+            if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
+                mCurrentSlide = 0;
             }
+            binding.viewPager.setCurrentItem(mCurrentSlide++, true);
         };
         new Timer().schedule(new TimerTask() {
             @Override
@@ -202,5 +208,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     @Override
     public String getTitle() {
         return "Home";
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        startActivity(intent);
     }
 }
