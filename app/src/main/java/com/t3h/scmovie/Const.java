@@ -6,4 +6,5 @@ public interface Const {
     String API_KEY = "f565c6353149e1b97eb7f993217dafac";
     String EXTRA_MOVIE_ID = "movie_id";
     String BASE_THUMBNAIL_PATH = "https://img.youtube.com/vi/%s/hqdefault.jpg";
+    String EXTRA_PERSON_ID = "person_id";
 }

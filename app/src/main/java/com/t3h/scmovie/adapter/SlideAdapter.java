@@ -22,6 +22,7 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
     private List<Movie> mMovies = new ArrayList<>();
     private LayoutInflater inflater;
     private ItemSlideBinding mBinding;
+    private OnClickSlideListener listener;
 
     public SlideAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -61,14 +62,23 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
         container.removeView(v);
     }
 
-
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+    public void setListener(OnClickSlideListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onClick(View view) {
+        if (listener != null) {
+            listener.onClickSlide();
+        }
+    }
 
+    public interface OnClickSlideListener {
+        void onClickSlide();
     }
 }

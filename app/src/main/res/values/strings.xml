@@ -17,4 +17,12 @@
     <string name="vote_average">Đánh giá</string>
     <string name="over_view">Tóm tắt</string>
     <string name="duration">Thời lượng</string>
+    <string name="cast_label">Diễn viên, lồng tiếng</string>
+    <string name="crew_label">Đội ngũ sản xuất</string>
+    <string name="country_label">Quốc gia</string>
+    <string name="companies_label">Công ty sản xuất</string>
+    <string name="birthday">Ngày sinh</string>
+    <string name="place_birth">Nơi sinh</string>
+    <string name="department">Vai trò</string>
+    <string name="list_movie">Các bộ phim đã tham gia</string>
 </resources>

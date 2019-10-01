@@ -9,14 +9,27 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import static com.t3h.scmovie.Const.YOUTUBE_API_KEY;
 
 public class YoutubeFragment extends YouTubePlayerFragment implements YouTubePlayer.OnInitializedListener {
-
     private YouTubePlayer mYoutubePlayer;
     private String mTrailerId;
+    private int mCurrentPosition;
+    private final String mCurrentIdKey = "trailerId";
+    private final String mCurrentPositionKey = "trailerPosition";
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         initialize(YOUTUBE_API_KEY, this);
+        if (bundle != null) {
+            mTrailerId = bundle.getString(mCurrentIdKey);
+            int position = bundle.getInt(mCurrentPositionKey);
+            playTrailer(position);
+            this.mCurrentPosition = position;
+        }
+        setTrailerId(mTrailerId);
+    }
+
+    public int getCurrentPosition() {
+        return mCurrentPosition;
     }
 
     @Override
@@ -44,16 +57,31 @@ public class YoutubeFragment extends YouTubePlayerFragment implements YouTubePla
         this.mTrailerId = mTrailerId;
         if (mTrailerId != null && mYoutubePlayer != null) {
             mYoutubePlayer.cueVideo(mTrailerId);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // Do something here if you need to
+            }
         }
     }
 
-    public void playTrailer() {
+    public void playTrailer(int position) {
         if (mYoutubePlayer != null) {
+            mYoutubePlayer.seekToMillis(position);
             mYoutubePlayer.play();
         }
     }
 
     public void setFullScreen(boolean isFullScreen) {
         mYoutubePlayer.setFullscreen(isFullScreen);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        if (mTrailerId != null) {
+            bundle.putString(mCurrentIdKey, mTrailerId);
+            bundle.putInt(mCurrentPositionKey, mYoutubePlayer.getCurrentTimeMillis());
+        }
     }
 }

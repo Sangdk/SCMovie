@@ -1,9 +1,8 @@
 package com.t3h.scmovie.service.api;
 
-import com.t3h.scmovie.model.Actor;
 import com.t3h.scmovie.model.Movie;
-import com.t3h.scmovie.service.response.ActorResponse;
-import com.t3h.scmovie.service.response.GenreResponse;
+import com.t3h.scmovie.model.People;
+import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
 import com.t3h.scmovie.service.response.VideoResponse;
 
@@ -45,7 +44,7 @@ public interface Api {
     );
 
     @GET("person/popular")
-    Call<ActorResponse> getActorsPopular(
+    Call<PeopleResponse> getActorsPopular(
             @Query("language") String lang,
             @Query("page") int page,
             @Query("api_key") String apiKey
@@ -62,4 +61,14 @@ public interface Api {
             @Path("movie_id") int movieId,
             @Query("api_key") String apiKey
     );
+
+    @GET("movie/{movie_id}/credits")
+    Call<PeopleResponse> getCredits(
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey
+    );
+
+    @GET("person/{person_id}")
+    Call<People> getPeopleDetail(@Path("person_id") int personId,
+                                 @Query("api_key") String apiKey);
 }

@@ -16,11 +16,13 @@ public class TrailerFragment extends BaseFragment<FragmentTrailerBinding> implem
     private YoutubeFragment mYoutubeFragment;
 
     public void setListTrailer(Context context, List<Video> mListTrailer, YoutubeFragment youtubeFragment) {
-        mVideoAdapter = new BaseAdapter<>(context, R.layout.item_trailer);
-        mVideoAdapter.setData(mListTrailer);
-        binding.recyclerTrailer.setAdapter(mVideoAdapter);
-        mYoutubeFragment = youtubeFragment;
-        mVideoAdapter.setListener(this);
+        if (context != null && binding != null) {
+            mVideoAdapter = new BaseAdapter<>(context, R.layout.item_trailer);
+            mVideoAdapter.setData(mListTrailer);
+            binding.recyclerTrailer.setAdapter(mVideoAdapter);
+            mYoutubeFragment = youtubeFragment;
+            mVideoAdapter.setListener(this);
+        }
     }
 
     @Override

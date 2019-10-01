@@ -10,7 +10,7 @@ public class MovieInfoFragment extends BaseFragment<FragmentMovieInfoBinding> {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
-        if (movie != null) {
+        if (movie != null && binding!= null) {
             binding.movieTitle.setText(movie.getTitle());
             binding.textDuration.setText(movie.getDuration() + " Phút");
             binding.overViewContent.setText(movie.getOverView());

@@ -5,9 +5,9 @@ import com.t3h.scmovie.base.BaseModel;
 
 import java.util.ArrayList;
 
-public class Actor extends BaseModel {
+public class People extends BaseModel {
     @SerializedName("id")
-    private String id;
+    private int id;
 
     @SerializedName("name")
     private String name;
@@ -27,6 +27,28 @@ public class Actor extends BaseModel {
     @SerializedName("known_for_department")
     private String knowForDepartment;
 
+    @SerializedName("birthday")
+    private String birthday;
+
+    @SerializedName("place_of_birth")
+    private String placeOfBirth;
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
+
     public String getKnowForDepartment() {
         return knowForDepartment;
     }
@@ -35,11 +57,11 @@ public class Actor extends BaseModel {
         this.knowForDepartment = knowForDepartment;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

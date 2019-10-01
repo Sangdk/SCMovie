@@ -9,14 +9,15 @@ import androidx.annotation.Nullable;
 
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
+import com.t3h.scmovie.activity.detail.PeopleDetailActivity;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
-import com.t3h.scmovie.model.Actor;
+import com.t3h.scmovie.model.People;
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.databinding.FragmentHomeBinding;
 import com.t3h.scmovie.service.api.ApiBuilder;
-import com.t3h.scmovie.service.response.ActorResponse;
+import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
 
 import java.util.ArrayList;
@@ -30,16 +31,18 @@ import retrofit2.Response;
 
 import static com.t3h.scmovie.Const.API_KEY;
 import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
+import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
-        MovieItemClickListener {
+        MovieItemClickListener, SlideAdapter.OnClickSlideListener,
+        PeopleItemClickListener {
     private String mLang = "vi";
     private List<Movie> data = new ArrayList<>();
-    private BaseAdapter<Movie> adapter_now_playing;
-    private BaseAdapter<Movie> adapter_up_coming;
-    private BaseAdapter<Movie> adapter_movie_popular;
-    private BaseAdapter<Movie> adapter_top_rated;
-    private BaseAdapter<Actor> adapter_actor_popular;
+    private BaseAdapter<Movie> mAdapterNowPlaying;
+    private BaseAdapter<Movie> mAdapterUpComing;
+    private BaseAdapter<Movie> mAdapterMoviePopular;
+    private BaseAdapter<Movie> mAdapterTopRated;
+    private BaseAdapter<People> mAdapterActorPopular;
     private SlideAdapter mSlideAdapter;
     private static final long PERIOD_TIME_SLIDE = 2000;
     private static final long DELAY_TIME_SLIDE = 100;
@@ -49,13 +52,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        adapter_now_playing = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter_up_coming = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter_movie_popular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter_top_rated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter_actor_popular = new BaseAdapter<>(getContext(), R.layout.item_actor);
+        mAdapterNowPlaying = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
+        mAdapterUpComing = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
+        mAdapterMoviePopular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
+        mAdapterTopRated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
+        mAdapterActorPopular = new BaseAdapter<>(getContext(), R.layout.item_people);
         initToolBar();
-        registerListener();
         ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -104,25 +106,27 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             }
         });
 
-        ApiBuilder.getApi().getActorsPopular(mLang, 1, API_KEY).enqueue(new Callback<ActorResponse>() {
+        ApiBuilder.getApi().getActorsPopular(mLang, 1, API_KEY).enqueue(new Callback<PeopleResponse>() {
             @Override
-            public void onResponse(Call<ActorResponse> call, Response<ActorResponse> response) {
+            public void onResponse(Call<PeopleResponse> call, Response<PeopleResponse> response) {
                 initDataForActor(response);
             }
 
             @Override
-            public void onFailure(Call<ActorResponse> call, Throwable t) {
+            public void onFailure(Call<PeopleResponse> call, Throwable t) {
 
             }
         });
         binding.viewPager.setVisibility(View.VISIBLE);
+        registerListener();
     }
 
     private void registerListener() {
-        adapter_up_coming.setListener(this);
-        adapter_now_playing.setListener(this);
-        adapter_movie_popular.setListener(this);
-        adapter_top_rated.setListener(this);
+        mAdapterUpComing.setListener(this);
+        mAdapterNowPlaying.setListener(this);
+        mAdapterMoviePopular.setListener(this);
+        mAdapterTopRated.setListener(this);
+        mAdapterActorPopular.setListener(this);
     }
 
     private void initToolBar() {
@@ -143,30 +147,30 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         binding.viewPager.setPageMargin(40);
     }
 
-    private void initDataForActor(Response<ActorResponse> response) {
-        adapter_actor_popular.setData(response.body().getActors());
-        binding.recyclerActorPopular.setAdapter(adapter_actor_popular);
+    private void initDataForActor(Response<PeopleResponse> response) {
+        mAdapterActorPopular.setData(response.body().getPeople());
+        binding.recyclerActorPopular.setAdapter(mAdapterActorPopular);
     }
 
     private void initDataTopRated(Response<MovieResponse> response) {
-        adapter_top_rated.setData(response.body().getMovies());
-        binding.recyclerTopRated.setAdapter(adapter_top_rated);
+        mAdapterTopRated.setData(response.body().getMovies());
+        binding.recyclerTopRated.setAdapter(mAdapterTopRated);
     }
 
     private void initDataPopular(Response<MovieResponse> response) {
-        adapter_movie_popular.setData(response.body().getMovies());
-        binding.recyclerPopular.setAdapter(adapter_movie_popular);
+        mAdapterMoviePopular.setData(response.body().getMovies());
+        binding.recyclerPopular.setAdapter(mAdapterMoviePopular);
     }
 
     private void initDataUpComing(Response<MovieResponse> response) {
-        adapter_up_coming.setData(response.body().getMovies());
-        binding.recyclerUpComing.setAdapter(adapter_up_coming);
+        mAdapterUpComing.setData(response.body().getMovies());
+        binding.recyclerUpComing.setAdapter(mAdapterUpComing);
     }
 
     private void initDataNowPlaying(Response<MovieResponse> response) {
-        adapter_now_playing.setData(response.body().getMovies());
+        mAdapterNowPlaying.setData(response.body().getMovies());
         data = response.body().getMovies();
-        binding.recyclerNowPlaying.setAdapter(adapter_now_playing);
+        binding.recyclerNowPlaying.setAdapter(mAdapterNowPlaying);
     }
 
     private void initDataForSlide() {
@@ -177,6 +181,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mSlideAdapter.setMovies(mSlideMovies);
         binding.viewPager.setAdapter(mSlideAdapter);
         initSlideTimer();
+        mSlideAdapter.setListener(this);
     }
 
     private void initSlideTimer() {
@@ -214,6 +219,24 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     public void onMovieClick(Movie movie) {
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickSlide() {
+        Movie movie = null;
+        if (mCurrentSlide > 0) {
+            movie = mSlideMovies.get(mCurrentSlide - 1);
+        }
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void OnPeopleClick(People people) {
+        Intent intent = new Intent(getContext(), PeopleDetailActivity.class);
+        intent.putExtra(EXTRA_PERSON_ID, people.getId());
         startActivity(intent);
     }
 }
