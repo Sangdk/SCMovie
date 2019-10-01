@@ -6,7 +6,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import static com.t3h.scmovie.Const.YOUTUBE_API_KEY;
+import static com.t3h.scmovie.utils.Const.YOUTUBE_API_KEY;
 
 public class YoutubeFragment extends YouTubePlayerFragment implements YouTubePlayer.OnInitializedListener {
     private YouTubePlayer mYoutubePlayer;

@@ -5,6 +5,7 @@ import com.t3h.scmovie.base.BaseFragment;
 import com.t3h.scmovie.databinding.FragmentMovieInfoBinding;
 import com.t3h.scmovie.model.Movie;
 
+
 public class MovieInfoFragment extends BaseFragment<FragmentMovieInfoBinding> {
     private Movie movie;
 

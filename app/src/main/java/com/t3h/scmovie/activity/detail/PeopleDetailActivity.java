@@ -4,19 +4,18 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
-import com.t3h.scmovie.Const;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityPeopleDetailBinding;
 import com.t3h.scmovie.model.People;
 import com.t3h.scmovie.service.api.ApiBuilder;
+import com.t3h.scmovie.utils.Const;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.t3h.scmovie.Const.API_KEY;
-import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
+import static com.t3h.scmovie.utils.Const.API_KEY;
+import static com.t3h.scmovie.utils.Const.EXTRA_PERSON_ID;
 
 public class PeopleDetailActivity extends BaseActivity<ActivityPeopleDetailBinding> {
 

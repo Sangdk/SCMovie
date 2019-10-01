@@ -17,7 +17,8 @@ import com.t3h.scmovie.model.People;
 
 import java.util.List;
 
-import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
+import static com.t3h.scmovie.utils.Const.EXTRA_PERSON_ID;
+
 
 public class MovieProductFragment extends BaseFragment<FragmentMovieProductBinding> implements
         PeopleItemClickListener {

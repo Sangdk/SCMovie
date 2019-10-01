@@ -41,8 +41,10 @@
                     android:scaleType="centerCrop"
                     app:thumb="@{item.posterPath}" />
 
+
                 <TextView
                     android:id="@+id/text_title"
+                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_30"
                     android:layout_below="@id/img_poster"
