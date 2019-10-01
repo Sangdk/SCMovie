@@ -34,6 +34,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.0-alpha02'
     annotationProcessor 'androidx.room:room-compiler:2.2.0-alpha02'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

@@ -12,6 +12,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t3h.scmovie.BR;
+import com.t3h.scmovie.databinding.ItemActorBinding;
 import com.t3h.scmovie.databinding.ItemVerticalMovieBinding;
 
 import java.util.List;
@@ -60,7 +61,8 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
             this.binding = binding;
             if (binding instanceof ItemVerticalMovieBinding) {
                 ((ItemVerticalMovieBinding) binding).textTitle.setSelected(true);
-                Log.d("BaseAdapter ",binding.getClass().getName());
+            } else if (binding instanceof ItemActorBinding) {
+                ((ItemActorBinding) binding).textActor.setSelected(true);
             }
         }
     }
