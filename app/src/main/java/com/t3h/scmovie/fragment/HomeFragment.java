@@ -14,12 +14,10 @@ import com.t3h.scmovie.R;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
-import com.t3h.scmovie.model.Actor;
 import com.t3h.scmovie.model.Genre;
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.databinding.FragmentHomeBinding;
 import com.t3h.scmovie.service.api.ApiBuilder;
-import com.t3h.scmovie.service.response.ActorResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
 
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     private BaseAdapter<Movie> adapter_up_coming;
     private BaseAdapter<Movie> adapter_movie_popular;
     private BaseAdapter<Movie> adapter_top_rated;
-    private BaseAdapter<Actor> adapter_actor_popular;
     private SlideAdapter mSlideAdapter;
     private static final long PERIOD_TIME_SLIDE = 2000;
     private static final long DELAY_TIME_SLIDE = 100;
@@ -62,7 +59,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         adapter_up_coming = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         adapter_movie_popular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         adapter_top_rated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter_actor_popular = new BaseAdapter<>(getContext(), R.layout.item_actor);
         initToolBar();
         ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, apiKey).enqueue(new Callback<MovieResponse>() {
             @Override
@@ -112,17 +108,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             }
         });
 
-        ApiBuilder.getApi().getActorsPopular(mLang, 1, apiKey).enqueue(new Callback<ActorResponse>() {
-            @Override
-            public void onResponse(Call<ActorResponse> call, Response<ActorResponse> response) {
-                initDataForActor(response);
-            }
 
-            @Override
-            public void onFailure(Call<ActorResponse> call, Throwable t) {
-
-            }
-        });
 
     }
 
@@ -144,10 +130,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         );
     }
 
-    private void initDataForActor(Response<ActorResponse> response) {
-        adapter_actor_popular.setData(response.body().getActors());
-        binding.recyclerActorPopular.setAdapter(adapter_actor_popular);
-    }
+
 
     private void initDataTopRated(Response<MovieResponse> response) {
         adapter_top_rated.setData(response.body().getMovies());

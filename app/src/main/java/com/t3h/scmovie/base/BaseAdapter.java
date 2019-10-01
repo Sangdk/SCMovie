@@ -1,7 +1,6 @@
 package com.t3h.scmovie.base;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -12,7 +11,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t3h.scmovie.BR;
-import com.t3h.scmovie.databinding.ItemActorBinding;
+import com.t3h.scmovie.databinding.ItemPeopleBinding;
 import com.t3h.scmovie.databinding.ItemVerticalMovieBinding;
 
 import java.util.List;
@@ -33,6 +32,10 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
         notifyDataSetChanged();
     }
 
+    public void setListener(BaseItemListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public BaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,7 +52,7 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     public void onBindViewHolder(@NonNull BaseAdapter.BaseHolder holder, int position) {
         M item = data.get(position);
         holder.binding.setVariable(BR.item, item);
-//        holder.binding.setVariable(BR.listener, listener);
+        holder.binding.setVariable(BR.listener, listener);
         holder.binding.executePendingBindings();
     }
 
@@ -61,8 +64,8 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
             this.binding = binding;
             if (binding instanceof ItemVerticalMovieBinding) {
                 ((ItemVerticalMovieBinding) binding).textTitle.setSelected(true);
-            } else if (binding instanceof ItemActorBinding) {
-                ((ItemActorBinding) binding).textActor.setSelected(true);
+            } else if (binding instanceof ItemPeopleBinding) {
+                ((ItemPeopleBinding) binding).textActor.setSelected(true);
             }
         }
     }
