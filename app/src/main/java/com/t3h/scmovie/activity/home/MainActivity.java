@@ -5,11 +5,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
+import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll {
 
     private HomeFragment mFragHome = new HomeFragment();
+    private AllMovieFragment mFragAllMovie = new AllMovieFragment();
 
     @Override
     protected void initAct() {
@@ -25,6 +27,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    public void sendTitle(String title, int totalPages) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frame_container, mFragAllMovie);
+        transaction.show(mFragAllMovie);
+        transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
+        transaction.commit();
+        mFragAllMovie.setData(title,this,totalPages);
     }
 
 //    @Override

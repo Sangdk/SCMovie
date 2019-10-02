@@ -25,4 +25,5 @@
     <string name="place_birth">Nơi sinh</string>
     <string name="department">Vai trò</string>
     <string name="list_movie">Các bộ phim đã tham gia</string>
+    <string name="load_all">tất cả</string>
 </resources>

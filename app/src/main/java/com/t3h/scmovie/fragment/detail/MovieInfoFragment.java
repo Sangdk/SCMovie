@@ -1,9 +1,5 @@
 package com.t3h.scmovie.fragment.detail;
 
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseFragment;
 import com.t3h.scmovie.databinding.FragmentMovieInfoBinding;
@@ -29,10 +25,5 @@ public class MovieInfoFragment extends BaseFragment<FragmentMovieInfoBinding> {
     @Override
     public String getTitle() {
         return "Movie Info";
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 }

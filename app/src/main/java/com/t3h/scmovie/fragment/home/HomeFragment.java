@@ -1,16 +1,19 @@
 package com.t3h.scmovie.fragment.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.activity.detail.PeopleDetailActivity;
+import com.t3h.scmovie.activity.home.MainActivity;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
@@ -37,8 +40,7 @@ import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         MovieItemClickListener, SlideAdapter.OnClickSlideListener,
-        PeopleItemClickListener {
-    private String mLang = "vi";
+        PeopleItemClickListener, View.OnClickListener {
     private List<Movie> data = new ArrayList<>();
     private BaseAdapter<Movie> mAdapterNowPlaying;
     private BaseAdapter<Movie> mAdapterUpComing;
@@ -50,6 +52,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private static final long DELAY_TIME_SLIDE = 100;
     private List<Movie> mSlideMovies = new ArrayList<>();
     private int mCurrentSlide = 0;
+    private LoadAll mCallback;
+    private int totalPagesNowPlaying = 0;
+    private int totalPagesUpComing = 0;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mAdapterTopRated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterActorPopular = new BaseAdapter<>(getContext(), R.layout.item_people);
         initToolBar();
+        String mLang = "vi";
         ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -129,6 +135,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mAdapterMoviePopular.setListener(this);
         mAdapterTopRated.setListener(this);
         mAdapterActorPopular.setListener(this);
+
+        binding.textLoadAllUpComing.setOnClickListener(this);
+        binding.textLoadAllNowPlaying.setOnClickListener(this);
     }
 
     private void initToolBar() {
@@ -166,12 +175,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     private void initDataUpComing(Response<MovieResponse> response) {
         mAdapterUpComing.setData(response.body().getMovies());
+        totalPagesUpComing = response.body().getTotalPages();
         binding.recyclerUpComing.setAdapter(mAdapterUpComing);
     }
 
     private void initDataNowPlaying(Response<MovieResponse> response) {
         mAdapterNowPlaying.setData(response.body().getMovies());
         data = response.body().getMovies();
+        totalPagesNowPlaying = response.body().getTotalPages();
         binding.recyclerNowPlaying.setAdapter(mAdapterNowPlaying);
     }
 
@@ -243,5 +254,40 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         intent.putExtra(EXTRA_PERSON_ID, people.getId());
         intent.putExtra(EXTRA_PERSON, jsonMovies);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.text_load_all_now_playing:
+                mCallback.sendTitle(getResources()
+                        .getString(R.string.movie_now_playing), totalPagesNowPlaying);
+                break;
+            case R.id.text_load_all_up_coming:
+                mCallback.sendTitle(getResources()
+                        .getString(R.string.movie_up_coming), totalPagesUpComing);
+                break;
+        }
+    }
+
+    public interface LoadAll {
+        void sendTitle(String title, int totalPage);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (LoadAll) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement TextClicked");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        mCallback = null; // => avoid leaking
+        super.onDetach();
     }
 }
