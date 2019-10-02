@@ -22,6 +22,7 @@ public abstract class BaseFragment<BD extends ViewDataBinding> extends Fragment 
         return binding.getRoot();
     }
 
+
     protected abstract int getLayoutId();
 
     public abstract String getTitle();

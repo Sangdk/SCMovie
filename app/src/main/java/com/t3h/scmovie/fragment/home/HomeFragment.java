@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.activity.detail.PeopleDetailActivity;
@@ -31,6 +32,7 @@ import retrofit2.Response;
 
 import static com.t3h.scmovie.Const.API_KEY;
 import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
+import static com.t3h.scmovie.Const.EXTRA_PERSON;
 import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
@@ -235,8 +237,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     @Override
     public void OnPeopleClick(People people) {
+        Gson gson = new Gson();
+        String jsonMovies = gson.toJson(people.getKnowFor());
         Intent intent = new Intent(getContext(), PeopleDetailActivity.class);
         intent.putExtra(EXTRA_PERSON_ID, people.getId());
+        intent.putExtra(EXTRA_PERSON, jsonMovies);
         startActivity(intent);
     }
 }

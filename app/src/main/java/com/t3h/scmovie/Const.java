@@ -7,4 +7,5 @@ public interface Const {
     String EXTRA_MOVIE_ID = "movie_id";
     String BASE_THUMBNAIL_PATH = "https://img.youtube.com/vi/%s/hqdefault.jpg";
     String EXTRA_PERSON_ID = "person_id";
+    String EXTRA_PERSON = "person_movie";
 }

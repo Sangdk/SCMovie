@@ -2,9 +2,11 @@ package com.t3h.scmovie.activity.detail;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.t3h.scmovie.R;
@@ -32,25 +34,36 @@ import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 
 public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding> {
     private YoutubeFragment mYoutubeFragment;
-    private MovieInfoFragment mMovieInfoFragment = new MovieInfoFragment();
-    private TrailerFragment mTrailerFragment = new TrailerFragment();
-    private MovieProductFragment mMovieProductFragment = new MovieProductFragment();
+    private MovieInfoFragment mMovieInfoFragment;
+    private TrailerFragment mTrailerFragment;
+    private MovieProductFragment mMovieProductFragment;
     private Movie mCurrentMovie;
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d("DetailActivity","on create");
+    }
+
+    @Override
     protected void initAct() {
+        initFragment();
         initActionBar();
-        initYoutubeFragment();
+        getData();
         initViewPager();
+    }
+
+    private void initFragment() {
+        mYoutubeFragment = (YoutubeFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_youtube);
+        mMovieInfoFragment = new MovieInfoFragment();
+        mTrailerFragment = new TrailerFragment();
+        mMovieProductFragment = new MovieProductFragment();
     }
 
     private void initViewPager() {
         DetailPagerAdapter mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        initFragmentInfo(mPagerAdapter);
-    }
-
-    private void initFragmentInfo(DetailPagerAdapter mPagerAdapter) {
         mPagerAdapter.addFragment(mMovieInfoFragment);
         mPagerAdapter.addFragment(mTrailerFragment);
         mPagerAdapter.addFragment(mMovieProductFragment);
@@ -60,11 +73,7 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
         binding.viewPager.setPageMargin(20);
     }
 
-
-
-    private void initYoutubeFragment() {
-        mYoutubeFragment = (YoutubeFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment_youtube);
+    private void getData() {
         Intent intent = getIntent();
         int movieId = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
         ApiBuilder.getApi().getVideos(movieId, API_KEY).enqueue(new Callback<VideoResponse>() {
