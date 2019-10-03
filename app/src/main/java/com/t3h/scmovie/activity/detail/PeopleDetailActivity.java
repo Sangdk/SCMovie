@@ -13,6 +13,7 @@ import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.databinding.ActivityPeopleDetailBinding;
+import com.t3h.scmovie.fragment.home.MovieItemClickListener;
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.model.People;
 import com.t3h.scmovie.service.api.ApiBuilder;
@@ -24,10 +25,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.t3h.scmovie.Const.API_KEY;
+import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 import static com.t3h.scmovie.Const.EXTRA_PERSON;
 import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
-public class PeopleDetailActivity extends BaseActivity<ActivityPeopleDetailBinding> {
+public class PeopleDetailActivity extends BaseActivity<ActivityPeopleDetailBinding> implements
+        MovieItemClickListener {
 
     public void setPeople(People people, Context context, Intent intent) {
         if (people != null && binding != null && context != null) {
@@ -44,6 +47,7 @@ public class PeopleDetailActivity extends BaseActivity<ActivityPeopleDetailBindi
                 binding.recyclerKnowFor.setAdapter(movieAdapter);
                 binding.listMovieLabel.setVisibility(View.VISIBLE);
                 binding.recyclerKnowFor.setVisibility(View.VISIBLE);
+                movieAdapter.setListener(this);
             }
             binding.textName.setText(people.getName());
             binding.textBirthday.setText(people.getBirthday());
@@ -82,5 +86,12 @@ public class PeopleDetailActivity extends BaseActivity<ActivityPeopleDetailBindi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_people_detail;
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        startActivity(intent);
     }
 }

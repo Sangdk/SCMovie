@@ -36,7 +36,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         transaction.show(mFragAllMovie);
         transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
         transaction.commit();
-        mFragAllMovie.setData(title,this,totalPages);
+        mFragAllMovie.setData(title, this, totalPages);
+
     }
 
 //    @Override

@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.activity.detail.PeopleDetailActivity;
-import com.t3h.scmovie.activity.home.MainActivity;
 import com.t3h.scmovie.adapter.SlideAdapter;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
@@ -55,6 +54,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private LoadAll mCallback;
     private int totalPagesNowPlaying = 0;
     private int totalPagesUpComing = 0;
+    private int totalPagesPopular = 0;
+    private int totalPagesTopRated = 0;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -138,6 +139,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
         binding.textLoadAllUpComing.setOnClickListener(this);
         binding.textLoadAllNowPlaying.setOnClickListener(this);
+        binding.textLoadAllPopular.setOnClickListener(this);
+        binding.textLoadAllTopRated.setOnClickListener(this);
     }
 
     private void initToolBar() {
@@ -165,11 +168,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     private void initDataTopRated(Response<MovieResponse> response) {
         mAdapterTopRated.setData(response.body().getMovies());
+        totalPagesTopRated = response.body().getTotalPages();
         binding.recyclerTopRated.setAdapter(mAdapterTopRated);
     }
 
     private void initDataPopular(Response<MovieResponse> response) {
         mAdapterMoviePopular.setData(response.body().getMovies());
+        totalPagesPopular = response.body().getTotalPages();
         binding.recyclerPopular.setAdapter(mAdapterMoviePopular);
     }
 
@@ -266,6 +271,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             case R.id.text_load_all_up_coming:
                 mCallback.sendTitle(getResources()
                         .getString(R.string.movie_up_coming), totalPagesUpComing);
+                break;
+            case R.id.text_load_all_popular:
+                mCallback.sendTitle(getResources()
+                        .getString(R.string.movie_popular), totalPagesPopular);
+                break;
+            case R.id.text_load_all_top_rated:
+                mCallback.sendTitle(getResources()
+                        .getString(R.string.movie_top_rated), totalPagesTopRated);
                 break;
         }
     }

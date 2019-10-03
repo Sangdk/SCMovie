@@ -20,23 +20,14 @@
         android:onClick="@{v->listener.OnPeopleClick(item)}"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_4"
-            app:cardCornerRadius="@dimen/dp_65"
-            app:cardElevation="@dimen/dp_2">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image_cast"
-                android:layout_width="@dimen/dp_70"
-                android:layout_height="@dimen/dp_70"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:thumb="@{item.profilePatch}" />
-        </androidx.cardview.widget.CardView>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_cast"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:thumb="@{item.profilePatch}" />
     </LinearLayout>
 </layout>

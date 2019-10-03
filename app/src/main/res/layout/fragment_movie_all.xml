@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_50"
-            android:text="Phim dang chieu"
             android:textColor="@color/color_white"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold" />
@@ -23,7 +22,6 @@
             android:id="@+id/recycler_movie_all"
             android:layout_marginTop="@dimen/dp_10"
             android:paddingLeft="@dimen/dp_10"
-            tools:listitem="@layout/item_vertical_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

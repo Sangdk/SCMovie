@@ -1,9 +1,11 @@
 package com.t3h.scmovie.fragment.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.t3h.scmovie.R;
+import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
 import com.t3h.scmovie.databinding.FragmentMovieAllBinding;
@@ -19,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.t3h.scmovie.Const.API_KEY;
+import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 
 public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     private List<Movie> moviesAll = new ArrayList<>();
@@ -33,67 +36,136 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
         return "All Movie";
     }
 
-    public void setData(String title, Context context,int total) {
-        GETALLASYNC aaa = new GETALLASYNC();
-        aaa.setContext(context);
-        aaa.setTitle(title);
-        aaa.setTotal(total);
-        aaa.execute();
+    public void setData(String title, Context context, int total) {
+        GetAllAsync async = new GetAllAsync();
+        async.setContext(context);
+        async.setTitle(title);
+        async.setTotal(total);
+        async.execute();
     }
 
-    private class GETALLASYNC extends AsyncTask<Void, Void, Void>{
-        String title;
-        int total;
-        Context context;
+    private class GetAllAsync extends AsyncTask<Void, Void, Void> implements MovieItemClickListener {
+        private String title;
+        private int total;
+        private BaseAdapter allMoviesAdapter;
 
-        public void setTitle(String title) {
+        void setTitle(String title) {
             this.title = title;
         }
 
-        public void setTotal(int total) {
+        void setTotal(int total) {
             this.total = total;
         }
 
         public void setContext(Context context) {
-            this.context = context;
+            allMoviesAdapter = new BaseAdapter(context, R.layout.item_vertical_movie);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            setData(title,total,context);
+            setData(title, total);
             return null;
         }
-        public void setData(String title, int totalPages, Context context) {
+
+        private void setData(String title, int totalPages) {
             String mLang = "vi";
-            int x = totalPages;
             for (int i = 1; i <= totalPages; i++) {
-                addSubMovies(i, mLang);
+                addSubMovies(i, mLang, title);
             }
         }
 
-        private void addSubMovies(int i, String mLang) {
-            ApiBuilder.getApi().getMoviesUpComing(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
-                @Override
-                public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                    List<Movie> subMovies = response.body().getMovies();
-                    moviesAll.addAll(subMovies);
-                    int i = moviesAll.size();
-                }
+        private void addSubMovies(int i, String mLang, String title) {
+            final String movieUpComing = "Phim sắp chiếu";
+            final String movieNowPlaying = "Phim đang chiếu";
+            final String moviePopular = "Nhiều người xem";
+            final String movieTopRated = "Phim nổi bật";
+            switch (title) {
+                case movieUpComing:
+                    moviesAll.clear();
+                    ApiBuilder.getApi().getMoviesUpComing(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                            if (response.body() != null) {
+                                List<Movie> subMovies = response.body().getMovies();
+                                moviesAll.addAll(subMovies);
+                                allMoviesAdapter.notifyDataSetChanged();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<MovieResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<MovieResponse> call, Throwable t) {
 
-                }
-            });
+                        }
+                    });
+                    break;
+                case movieNowPlaying:
+                    moviesAll.clear();
+                    ApiBuilder.getApi().getMoviesNowPlaying(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                            if (response.body() != null) {
+                                List<Movie> subMovies = response.body().getMovies();
+                                moviesAll.addAll(subMovies);
+                                allMoviesAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+                        }
+                    });
+                case moviePopular:
+                    moviesAll.clear();
+                    ApiBuilder.getApi().getMoviesPopular(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                            if (response.body() != null) {
+                                List<Movie> subMovies = response.body().getMovies();
+                                moviesAll.addAll(subMovies);
+                                allMoviesAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+                        }
+                    });
+                case movieTopRated:
+                    moviesAll.clear();
+                    ApiBuilder.getApi().getMoviesTopRated(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                            if (response.body() != null) {
+                                List<Movie> subMovies = response.body().getMovies();
+                                moviesAll.addAll(subMovies);
+                                allMoviesAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+                        }
+                    });
+            }
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            BaseAdapter allMoviesAdapter = new BaseAdapter(context, R.layout.item_vertical_movie);
             allMoviesAdapter.setData(moviesAll);
             binding.recyclerMovieAll.setAdapter(allMoviesAdapter);
             binding.textTitle.setText(title);
+            allMoviesAdapter.setListener(this);
+        }
+
+        @Override
+        public void onMovieClick(Movie movie) {
+            Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+            intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+            startActivity(intent);
         }
     }
 }

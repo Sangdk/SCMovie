@@ -1,9 +1,11 @@
 package com.t3h.scmovie.activity.detail;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,7 @@ import com.t3h.scmovie.model.Video;
 import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.VideoResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,15 +41,14 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     private TrailerFragment mTrailerFragment;
     private MovieProductFragment mMovieProductFragment;
     private Movie mCurrentMovie;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("DetailActivity","on create");
-    }
+    private Dialog mLoadingDialog;
 
     @Override
     protected void initAct() {
+        mLoadingDialog = new Dialog(this);
+        mLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mLoadingDialog.setContentView(R.layout.dialog_loading);
+
         initFragment();
         initActionBar();
         getData();
@@ -62,6 +64,7 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     }
 
     private void initViewPager() {
+        mLoadingDialog.show();
         DetailPagerAdapter mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mPagerAdapter.addFragment(mMovieInfoFragment);
@@ -112,24 +115,28 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     }
 
     private void setCredits(Response<PeopleResponse> response) {
-        List<People> mCasts = response.body().getCasts();
-        List<People> mCrews = response.body().getCrews();
-        mMovieProductFragment.setListCast(this, mCasts);
-        mMovieProductFragment.setListCrew(this, mCrews);
+        if (response.body() != null) {
+            List<People> mCasts = response.body().getCasts();
+            List<People> mCrews = response.body().getCrews();
+            mMovieProductFragment.setListCast(this, mCasts);
+            mMovieProductFragment.setListCrew(this, mCrews);
+        }
     }
 
     private void setMovieInfo(Response<Movie> response) {
         mCurrentMovie = response.body();
-        mMovieInfoFragment.setMovie(mCurrentMovie);
+        mMovieInfoFragment.setMovie(mCurrentMovie,mLoadingDialog);
         mMovieProductFragment.setProduct(mCurrentMovie);
     }
 
     private void setTrailer(Response<VideoResponse> response) {
-        List<Video> mListTrailer = response.body().getVideos();
-        mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
-        int position = mYoutubeFragment.getCurrentPosition();
-        mYoutubeFragment.playTrailer(position);
-        mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);
+        if (response.body() != null) {
+            List<Video> mListTrailer = response.body().getVideos();
+            mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
+            int position = mYoutubeFragment.getCurrentPosition();
+            mYoutubeFragment.playTrailer(position);
+            mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);
+        }
     }
 
     private void initActionBar() {

@@ -1,5 +1,6 @@
 package com.t3h.scmovie.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     public class BaseHolder extends RecyclerView.ViewHolder {
         ViewDataBinding binding;
 
+        @SuppressLint("ResourceAsColor")
         public BaseHolder(@NonNull ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
