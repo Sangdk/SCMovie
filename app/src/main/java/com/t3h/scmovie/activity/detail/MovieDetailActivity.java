@@ -125,14 +125,14 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
 
     private void setMovieInfo(Response<Movie> response) {
         mCurrentMovie = response.body();
-        mMovieInfoFragment.setMovie(mCurrentMovie,mLoadingDialog);
+        mMovieInfoFragment.setMovie(mCurrentMovie, mLoadingDialog);
         mMovieProductFragment.setProduct(mCurrentMovie);
     }
 
     private void setTrailer(Response<VideoResponse> response) {
         if (response.body() != null) {
             List<Video> mListTrailer = response.body().getVideos();
-            mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
+            if (mListTrailer != null) mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
             int position = mYoutubeFragment.getCurrentPosition();
             mYoutubeFragment.playTrailer(position);
             mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);

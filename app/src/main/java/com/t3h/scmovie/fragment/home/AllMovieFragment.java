@@ -1,8 +1,11 @@
 package com.t3h.scmovie.fragment.home;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.view.Window;
 
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
@@ -25,6 +28,7 @@ import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 
 public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     private List<Movie> moviesAll = new ArrayList<>();
+    private Dialog mLoadingDialog;
 
     @Override
     protected int getLayoutId() {
@@ -36,7 +40,8 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
         return "All Movie";
     }
 
-    public void setData(String title, Context context, int total) {
+    public void setData(String title, Context context, int total, Dialog mLoadingDialog) {
+        this.mLoadingDialog = mLoadingDialog;
         GetAllAsync async = new GetAllAsync();
         async.setContext(context);
         async.setTitle(title);
@@ -48,6 +53,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
         private String title;
         private int total;
         private BaseAdapter allMoviesAdapter;
+        private int currentPages = 1;
 
         void setTitle(String title) {
             this.title = title;
@@ -69,9 +75,13 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
 
         private void setData(String title, int totalPages) {
             String mLang = "vi";
-            for (int i = 1; i <= totalPages; i++) {
-                addSubMovies(i, mLang, title);
-            }
+            addSubMovies(currentPages, mLang, title);
+            allMoviesAdapter.setOnBottomReachedListener(() -> {
+                if (currentPages < totalPages) {
+                    currentPages++;
+                    addSubMovies(currentPages, mLang, title);
+                }
+            });
         }
 
         private void addSubMovies(int i, String mLang, String title) {
@@ -81,7 +91,6 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
             final String movieTopRated = "Phim nổi bật";
             switch (title) {
                 case movieUpComing:
-                    moviesAll.clear();
                     ApiBuilder.getApi().getMoviesUpComing(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -99,8 +108,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
                     });
                     break;
                 case movieNowPlaying:
-                    moviesAll.clear();
-                    ApiBuilder.getApi().getMoviesNowPlaying(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                    ApiBuilder.getApi().getMoviesNowPlaying(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             if (response.body() != null) {
@@ -116,8 +124,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
                         }
                     });
                 case moviePopular:
-                    moviesAll.clear();
-                    ApiBuilder.getApi().getMoviesPopular(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                    ApiBuilder.getApi().getMoviesPopular(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             if (response.body() != null) {
@@ -133,8 +140,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
                         }
                     });
                 case movieTopRated:
-                    moviesAll.clear();
-                    ApiBuilder.getApi().getMoviesTopRated(mLang,i,API_KEY).enqueue(new Callback<MovieResponse>() {
+                    ApiBuilder.getApi().getMoviesTopRated(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             if (response.body() != null) {
@@ -159,6 +165,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
             binding.recyclerMovieAll.setAdapter(allMoviesAdapter);
             binding.textTitle.setText(title);
             allMoviesAdapter.setListener(this);
+            mLoadingDialog.dismiss();
         }
 
         @Override
@@ -167,5 +174,12 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
             intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        moviesAll.clear();
+        Log.d("AllMovieFrag", "on destroy");
     }
 }

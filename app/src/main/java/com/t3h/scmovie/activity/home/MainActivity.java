@@ -1,5 +1,8 @@
 package com.t3h.scmovie.activity.home;
 
+import android.app.Dialog;
+import android.view.Window;
+
 import androidx.fragment.app.FragmentTransaction;
 
 import com.t3h.scmovie.R;
@@ -36,7 +39,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         transaction.show(mFragAllMovie);
         transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
         transaction.commit();
-        mFragAllMovie.setData(title, this, totalPages);
+        final Dialog mLoadingDialog = new Dialog(this);
+        mLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mLoadingDialog.setContentView(R.layout.dialog_loading);
+        mLoadingDialog.show();
+        mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
 
     }
 
