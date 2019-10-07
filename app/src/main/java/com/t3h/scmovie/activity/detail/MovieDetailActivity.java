@@ -1,8 +1,10 @@
 package com.t3h.scmovie.activity.detail;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -21,6 +23,7 @@ import com.t3h.scmovie.model.Video;
 import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.VideoResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,25 +35,56 @@ import static com.t3h.scmovie.utils.Const.EXTRA_MOVIE_ID;
 
 public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding> {
     private YoutubeFragment mYoutubeFragment;
-    private MovieInfoFragment mMovieInfoFragment = new MovieInfoFragment();
-    private TrailerFragment mTrailerFragment = new TrailerFragment();
-    private MovieProductFragment mMovieProductFragment = new MovieProductFragment();
+    private MovieInfoFragment mMovieInfoFragment;
+    private TrailerFragment mTrailerFragment;
+    private MovieProductFragment mMovieProductFragment;
     private Movie mCurrentMovie;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void initAct() {
+        mLoadingDialog = new Dialog(this);
+        mLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mLoadingDialog.setContentView(R.layout.dialog_loading);
+
+        initFragment();
         initActionBar();
-        initYoutubeFragment();
+        getData();
         initViewPager();
     }
 
-    private void initViewPager() {
-        DetailPagerAdapter mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(),
-                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        initFragmentInfo(mPagerAdapter);
+    private void initFragment() {
+        mYoutubeFragment = (YoutubeFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_youtube);
+        mMovieInfoFragment = new MovieInfoFragment();
+        mTrailerFragment = new TrailerFragment();
+        mMovieProductFragment = new MovieProductFragment();
     }
 
-    private void initFragmentInfo(DetailPagerAdapter mPagerAdapter) {
+    private void initViewPager() {
+//        Field mScroller = null;
+//        try {
+//            mScroller = ViewPager.class.getDeclaredField("mScroller");
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+//        Interpolator mInterpolator = new Interpolator() {
+//            @Override
+//            public float getInterpolation(float t) {
+//                t -= 1.0f;
+//                return t * t * t * t * t  + 1.0f;
+//            }
+//        };
+//
+//        mScroller.setAccessible(true);
+//        try {
+//            mScroller.set(binding.viewPager, new CustomScroller(this, mInterpolator));
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+        mLoadingDialog.show();
+        DetailPagerAdapter mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(),
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mPagerAdapter.addFragment(mMovieInfoFragment);
         mPagerAdapter.addFragment(mTrailerFragment);
         mPagerAdapter.addFragment(mMovieProductFragment);
@@ -60,11 +94,7 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
         binding.viewPager.setPageMargin(20);
     }
 
-
-
-    private void initYoutubeFragment() {
-        mYoutubeFragment = (YoutubeFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment_youtube);
+    private void getData() {
         Intent intent = getIntent();
         int movieId = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
         ApiBuilder.getApi().getVideos(movieId, API_KEY).enqueue(new Callback<VideoResponse>() {
@@ -103,24 +133,30 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     }
 
     private void setCredits(Response<PeopleResponse> response) {
-        List<People> mCasts = response.body().getCasts();
-        List<People> mCrews = response.body().getCrews();
-        mMovieProductFragment.setListCast(this, mCasts);
-        mMovieProductFragment.setListCrew(this, mCrews);
+        if (response.body() != null) {
+            List<People> mCasts = response.body().getCasts();
+            List<People> mCrews = response.body().getCrews();
+            mMovieProductFragment.setListCast(this, mCasts);
+            mMovieProductFragment.setListCrew(this, mCrews);
+        }
     }
 
     private void setMovieInfo(Response<Movie> response) {
         mCurrentMovie = response.body();
-        mMovieInfoFragment.setMovie(mCurrentMovie);
+        mMovieInfoFragment.setMovie(mCurrentMovie, mLoadingDialog);
         mMovieProductFragment.setProduct(mCurrentMovie);
     }
 
     private void setTrailer(Response<VideoResponse> response) {
-        List<Video> mListTrailer = response.body().getVideos();
-        mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
-        int position = mYoutubeFragment.getCurrentPosition();
-        mYoutubeFragment.playTrailer(position);
-        mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);
+        if (response.body() != null) {
+            List<Video> mListTrailer = response.body().getVideos();
+            if (mListTrailer != null && mListTrailer.size() > 0) {
+                mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
+            }
+            int position = mYoutubeFragment.getCurrentPosition();
+            mYoutubeFragment.playTrailer(position);
+            mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);
+        }
     }
 
     private void initActionBar() {
@@ -139,5 +175,4 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
     }
-
 }

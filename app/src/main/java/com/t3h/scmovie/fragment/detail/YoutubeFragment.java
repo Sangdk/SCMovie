@@ -79,7 +79,7 @@ public class YoutubeFragment extends YouTubePlayerFragment implements YouTubePla
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        if (mTrailerId != null) {
+        if (mTrailerId != null && mYoutubePlayer != null) {
             bundle.putString(mCurrentIdKey, mTrailerId);
             bundle.putInt(mCurrentPositionKey, mYoutubePlayer.getCurrentTimeMillis());
         }

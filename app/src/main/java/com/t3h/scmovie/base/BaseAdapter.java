@@ -1,5 +1,6 @@
 package com.t3h.scmovie.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,10 +22,15 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     private int layoutId;
     private List<M> data;
     private BaseItemListener listener;
+    private OnBottomReachedListener onBottomReachedListener;
 
     public BaseAdapter(Context context, @LayoutRes int layoutId) {
         inflater = LayoutInflater.from(context);
         this.layoutId = layoutId;
+    }
+
+    public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener) {
+        this.onBottomReachedListener = onBottomReachedListener;
     }
 
     public void setData(List<M> data) {
@@ -54,11 +60,15 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
         holder.binding.setVariable(BR.item, item);
         holder.binding.setVariable(BR.listener, listener);
         holder.binding.executePendingBindings();
+        if (position == data.size() - 1 && onBottomReachedListener != null) {
+            onBottomReachedListener.onBottomReached();
+        }
     }
 
     public class BaseHolder extends RecyclerView.ViewHolder {
         ViewDataBinding binding;
 
+        @SuppressLint("ResourceAsColor")
         public BaseHolder(@NonNull ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -71,5 +81,9 @@ public class BaseAdapter<M extends BaseModel> extends RecyclerView.Adapter<BaseA
     }
 
     public interface BaseItemListener {
+    }
+
+    public interface OnBottomReachedListener {
+        void onBottomReached();
     }
 }

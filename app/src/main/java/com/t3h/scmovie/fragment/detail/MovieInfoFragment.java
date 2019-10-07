@@ -1,5 +1,7 @@
 package com.t3h.scmovie.fragment.detail;
 
+import android.app.Dialog;
+
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseFragment;
 import com.t3h.scmovie.databinding.FragmentMovieInfoBinding;
@@ -7,11 +9,10 @@ import com.t3h.scmovie.model.Movie;
 
 
 public class MovieInfoFragment extends BaseFragment<FragmentMovieInfoBinding> {
-    private Movie movie;
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-        if (movie != null && binding!= null) {
+    public void setMovie(Movie movie, Dialog loadingDialog) {
+        loadingDialog.dismiss();
+        if (movie != null && binding != null) {
             binding.movieTitle.setText(movie.getTitle());
             binding.textDuration.setText(movie.getDuration() + " Phút");
             binding.overViewContent.setText(movie.getOverView());

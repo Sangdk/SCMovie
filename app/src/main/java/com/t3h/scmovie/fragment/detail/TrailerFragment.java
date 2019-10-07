@@ -11,7 +11,7 @@ import com.t3h.scmovie.model.Video;
 import java.util.List;
 
 public class TrailerFragment extends BaseFragment<FragmentTrailerBinding> implements
-        TrailerItemClickListener {
+        TrailerItemClickListener{
     private BaseAdapter<Video> mVideoAdapter;
     private YoutubeFragment mYoutubeFragment;
 

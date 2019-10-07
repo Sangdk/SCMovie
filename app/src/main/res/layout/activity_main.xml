@@ -46,5 +46,52 @@
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/linear_pages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_home"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_home"
+                android:text="@string/title_home_main"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_tv"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:textStyle="bold"
+                android:textColor="@color/color_white"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_live_tv"
+                android:text="@string/title_tv" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_search"
+                android:text="@string/title_search"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>

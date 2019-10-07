@@ -13,19 +13,19 @@ public class MovieResponse {
     @SerializedName("results")
     private List<Movie> mMovies;
 
-    public int getmTotalResults() {
-        return mTotalResults;
+    @SerializedName("total_pages")
+    private int mTotalPages;
+
+    public int getTotalPages() {
+        return mTotalPages;
     }
 
-    public void setmTotalResults(int mTotalResults) {
-        this.mTotalResults = mTotalResults;
+    public int getTotalResults() {
+        return mTotalResults;
     }
 
     public List<Movie> getMovies() {
         return mMovies;
     }
 
-    public void setmMovies(List<Movie> mMovies) {
-        this.mMovies = mMovies;
-    }
 }
