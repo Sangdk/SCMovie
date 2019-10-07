@@ -26,4 +26,15 @@
     <string name="place_birth">Nơi sinh</string>
     <string name="department">Vai trò</string>
     <string name="list_movie">Các bộ phim đã tham gia</string>
+    <string name="nav_header_desc">Navigation Header</string>
+    <string name="nav_header_title">SC Movie</string>
+    <string name="give_5_star_now">Rate 5 stars</string>
+    <string name="my_downloads">Favorite</string>
+    <string name="my_account">My account</string>
+    <string name="reset_movie">Reset movie</string>
+    <string name="add_favorite">Favorite</string>
+    <string name="feedback">Feedback</string>
+    <string name="home">Home</string>
+    <string name="navigation_drawer_open">Open_navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
 </resources>

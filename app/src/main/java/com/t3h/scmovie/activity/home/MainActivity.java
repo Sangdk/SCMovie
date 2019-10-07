@@ -1,16 +1,26 @@
 package com.t3h.scmovie.activity.home;
 
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.navigation.NavigationView;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity<ActivityMainBinding>  {
 
     private HomeFragment mFragHome = new HomeFragment();
 
+    private NavigationView mNavigationView;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void initAct() {
@@ -23,6 +33,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         transaction.commit();
 
 
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle(null);
+
+//        drawerLayout = findViewById(R.id.drawer_layout);
+//        mNavigationView = findViewById(R.id.nav_view);
+//        toggle = new ActionBarDrawerToggle(
+//                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.color_white));
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -31,6 +53,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
 //    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (toggle.onOptionsItemSelected(item)){
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    //    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //
 //        switch (item.getItemId()) {

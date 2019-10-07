@@ -56,7 +56,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mAdapterMoviePopular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterTopRated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterActorPopular = new BaseAdapter<>(getContext(), R.layout.item_people);
-        initToolBar();
+//        initToolBar();
         ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -129,18 +129,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     private void initToolBar() {
-        binding.appBarLayout.addOnOffsetChangedListener(
-                (appBarLayout, verticalOffset) -> {
-                    if (Math.abs(verticalOffset) > 200) {
-                        binding.collapsingToolbar.setTitleEnabled(true);
-                        binding.collapsingToolbar.setTitle("Home");
-                        binding.viewPager.setVisibility(View.GONE);
-                    } else {
-                        binding.collapsingToolbar.setTitleEnabled(false);
-                        binding.viewPager.setVisibility(View.VISIBLE);
-                    }
-                }
-        );
+//        binding.appBarLayout.addOnOffsetChangedListener(
+//                (appBarLayout, verticalOffset) -> {
+//                    if (Math.abs(verticalOffset) > 200) {
+//                        binding.collapsingToolbar.setTitleEnabled(true);
+//                        binding.collapsingToolbar.setTitle("Home");
+//                        binding.viewPager.setVisibility(View.GONE);
+//                    } else {
+//                        binding.collapsingToolbar.setTitleEnabled(false);
+//                        binding.viewPager.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//        );
         binding.viewPager.setPadding(80, 40, 80, 20);
         binding.viewPager.setClipToPadding(false);
         binding.viewPager.setPageMargin(40);

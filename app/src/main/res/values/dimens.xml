@@ -23,5 +23,7 @@
     <dimen name="dp_70">70dp</dimen>
     <dimen name="dp_24">24dp</dimen>
     <dimen name="dp_100">100dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="nav_header_height">220dp</dimen>
 
 </resources>

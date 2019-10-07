@@ -16,5 +16,7 @@
     <color name="accent_500">#E91E63</color>
     <color name="primary_700">#303F9F</color>
     <color name="black_trans80">#33000000</color>
+    <color name="color_background_navigation">#137910</color>
+    <color name="color_background_slideshow">#000</color>
 
 </resources>

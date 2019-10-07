@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        tools:context=".activity.home.MainActivity">-->
+
+<!--        <androidx.drawerlayout.widget.DrawerLayout-->
+<!--            android:id="@+id/drawer_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fitsSystemWindows="true"-->
+<!--            tools:openDrawer="start">-->
+
+<!--&lt;!&ndash;            <include&ndash;&gt;-->
+<!--&lt;!&ndash;                layout="@layout/app_bar_main"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="match_parent" />&ndash;&gt;-->
+
+<!--            <com.google.android.material.navigation.NavigationView-->
+<!--                android:id="@+id/nav_view"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:fitsSystemWindows="true"-->
+<!--                app:headerLayout="@layout/nav_header_main"-->
+<!--                app:menu="@menu/activity_main_navigation" />-->
+
+<!--        </androidx.drawerlayout.widget.DrawerLayout>-->
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frame_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+<!--    </LinearLayout>-->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
