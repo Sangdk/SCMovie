@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Window;
+import android.widget.Toast;
 
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
@@ -80,6 +80,10 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
                 if (currentPages < totalPages) {
                     currentPages++;
                     addSubMovies(currentPages, mLang, title);
+                } else {
+                    Toast.makeText(getContext(),
+                            "Load hết " + totalPages * 20 + " phim",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         }

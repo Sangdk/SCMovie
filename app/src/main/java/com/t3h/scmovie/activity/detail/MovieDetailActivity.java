@@ -3,12 +3,10 @@ package com.t3h.scmovie.activity.detail;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.t3h.scmovie.R;
@@ -64,6 +62,26 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     }
 
     private void initViewPager() {
+//        Field mScroller = null;
+//        try {
+//            mScroller = ViewPager.class.getDeclaredField("mScroller");
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+//        Interpolator mInterpolator = new Interpolator() {
+//            @Override
+//            public float getInterpolation(float t) {
+//                t -= 1.0f;
+//                return t * t * t * t * t  + 1.0f;
+//            }
+//        };
+//
+//        mScroller.setAccessible(true);
+//        try {
+//            mScroller.set(binding.viewPager, new CustomScroller(this, mInterpolator));
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
         mLoadingDialog.show();
         DetailPagerAdapter mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -132,7 +150,9 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     private void setTrailer(Response<VideoResponse> response) {
         if (response.body() != null) {
             List<Video> mListTrailer = response.body().getVideos();
-            if (mListTrailer != null) mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
+            if (mListTrailer != null && mListTrailer.size() > 0) {
+                mYoutubeFragment.setTrailerId(mListTrailer.get(0).getKey());
+            }
             int position = mYoutubeFragment.getCurrentPosition();
             mYoutubeFragment.playTrailer(position);
             mTrailerFragment.setListTrailer(this, mListTrailer, mYoutubeFragment);
@@ -155,5 +175,4 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
     }
-
 }

@@ -1,8 +1,11 @@
 package com.t3h.scmovie.activity.home;
 
 import android.app.Dialog;
+import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.t3h.scmovie.R;
@@ -10,21 +13,38 @@ import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
+import com.t3h.scmovie.fragment.search.SearchFragment;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll, View.OnClickListener {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
+    private SearchFragment mFragSearch = new SearchFragment();
 
     @Override
     protected void initAct() {
-//         = getSupportActionBar();
-//        binding.navigation.setOnNavigationItemSelectedListener(this);
-//        actionBar.setTitle("Home");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frame_container,mFragSearch);
         transaction.add(R.id.frame_container, mFragHome);
         transaction.show(mFragHome);
+        binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
         transaction.commit();
+        registerPages();
+    }
+
+    private void showFragment(Fragment fmShow){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.hide(mFragHome);
+        transaction.hide(mFragSearch);
+        transaction.hide(mFragAllMovie);
+        transaction.show(fmShow);
+        transaction.commit();
+    }
+
+    private void registerPages() {
+        binding.btnHome.setOnClickListener(this);
+        binding.btnTv.setOnClickListener(this);
+        binding.btnSearch.setOnClickListener(this);
     }
 
     @Override
@@ -44,23 +64,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         mLoadingDialog.setContentView(R.layout.dialog_loading);
         mLoadingDialog.show();
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
-
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.navigation_home:
-////                actionBar.setTitle("Home");
-//                return true;
-//            case R.id.navigation_favorite:
-////                actionBar.setTitle("Favorite");
-//                return true;
-//            case R.id.navigation_user:
-////                actionBar.setTitle("User");
-//                return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_home:
+                showFragment(mFragHome);
+                binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
+                binding.btnSearch.setTextColor(getResources().getColor(R.color.color_white));
+                break;
+            case R.id.btn_tv:
+                break;
+            case R.id.btn_search:
+                showFragment(mFragSearch);
+                binding.btnHome.setTextColor(getResources().getColor(R.color.color_white));
+                binding.btnSearch.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
+                break;
+        }
+    }
 }
