@@ -57,6 +57,18 @@
                 android:text="@string/title_search"
                 android:textAllCaps="false"
                 android:textColor="@color/color_white" />
+            <Button
+                android:id="@+id/btn_account"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_person"
+                android:text="@string/title_account"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

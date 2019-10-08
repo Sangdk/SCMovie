@@ -45,7 +45,7 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
 
     private void bindData(Movie movie) {
         Glide.with(mBinding.imageSlide)
-                .load(Const.BASE_IMAGE_URL + movie.getBackdropPath())
+                .load(Const.BASE_IMAGE_URL + movie.getPosterPath())
                 .into(mBinding.imageSlide);
         mBinding.textTitle.setText(movie.getTitle());
         mBinding.textReleaseDate.setText(movie.getReleaseDate());

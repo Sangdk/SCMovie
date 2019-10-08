@@ -48,7 +48,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private BaseAdapter<People> mAdapterActorPopular;
     private SlideAdapter mSlideAdapter;
     private static final long PERIOD_TIME_SLIDE = 2000;
-    private static final long DELAY_TIME_SLIDE = 100;
+    private static final long DELAY_TIME_SLIDE = 1500;
     private List<Movie> mSlideMovies = new ArrayList<>();
     private int mCurrentSlide = 0;
     private LoadAll mCallback;
@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private void initToolBar() {
         binding.appBarLayout.addOnOffsetChangedListener(
                 (appBarLayout, verticalOffset) -> {
-                    if (Math.abs(verticalOffset) > 200) {
+                    if (Math.abs(verticalOffset) > 700) {
                         binding.collapsingToolbar.setTitleEnabled(true);
                         binding.collapsingToolbar.setTitle("Home");
                         binding.viewPager.setVisibility(View.GONE);
@@ -156,7 +156,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
                     }
                 }
         );
-        binding.viewPager.setPadding(80, 40, 80, 20);
+        binding.viewPager.setPadding(150, 40, 150, 20);
         binding.viewPager.setClipToPadding(false);
         binding.viewPager.setPageMargin(40);
     }
@@ -193,7 +193,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     private void initDataForSlide() {
         mSlideAdapter = new SlideAdapter(getContext());
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 9; i++) {
             mSlideMovies.add(data.get(i));
         }
         mSlideAdapter.setMovies(mSlideMovies);

@@ -3,7 +3,7 @@ package com.t3h.scmovie.activity.home;
 import android.app.Dialog;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,11 +15,15 @@ import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll, View.OnClickListener {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
     private SearchFragment mFragSearch = new SearchFragment();
+    private List<Button> buttons = new ArrayList<>();
 
     @Override
     protected void initAct() {
@@ -42,9 +46,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     }
 
     private void registerPages() {
+        buttons.add(binding.btnHome);
+        buttons.add(binding.btnSearch);
+        buttons.add(binding.btnAccount);
+        buttons.add(binding.btnTv);
         binding.btnHome.setOnClickListener(this);
         binding.btnTv.setOnClickListener(this);
         binding.btnSearch.setOnClickListener(this);
+        binding.btnAccount.setOnClickListener(this);
+    }
+
+    private void setFocus(Button btnFocus) {
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).setTextColor(getResources().getColor(R.color.color_white));
+        }
+        btnFocus.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
     }
 
     @Override
@@ -75,15 +91,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         switch (view.getId()) {
             case R.id.btn_home:
                 showFragment(mFragHome);
-                binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
-                binding.btnSearch.setTextColor(getResources().getColor(R.color.color_white));
+                setFocus(binding.btnHome);
                 break;
             case R.id.btn_tv:
+                setFocus(binding.btnTv);
                 break;
             case R.id.btn_search:
                 showFragment(mFragSearch);
-                binding.btnHome.setTextColor(getResources().getColor(R.color.color_white));
-                binding.btnSearch.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
+                setFocus(binding.btnSearch);
+                break;
+            case R.id.btn_account:
+                setFocus(binding.btnAccount);
                 break;
         }
     }
