@@ -25,23 +25,19 @@ public class SplashActivity extends Activity {
     }
 
     protected void initAct() {
-        prg = findViewById(R.id.prg_bar);
         Animation animation = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.translate);
         ImageView img = findViewById(R.id.img_logo);
         animation.reset();
         img.clearAnimation();
         img.startAnimation(animation);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
 
 
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-                SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
+            /* Create an Intent that will start the Menu-Activity. */
+            Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            SplashActivity.this.finish();
 
-            }
         }, 3000);
     }
 

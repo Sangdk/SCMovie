@@ -198,6 +198,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         }
         mSlideAdapter.setMovies(mSlideMovies);
         binding.viewPager.setAdapter(mSlideAdapter);
+        mCurrentSlide = 2;
         initSlideTimer();
         mSlideAdapter.setListener(this);
     }

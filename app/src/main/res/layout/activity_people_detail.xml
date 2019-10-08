@@ -53,14 +53,14 @@
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/text_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="46dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/color_white_smoke"
             android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/birthday_label"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
@@ -78,8 +78,9 @@
             app:layout_constraintTop_toBottomOf="@+id/birthday_label" />
 
         <TextView
+            android:maxLines="2"
             android:id="@+id/text_place_birth"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_280"
             android:layout_height="wrap_content"
             android:layout_marginStart="61dp"
             android:layout_marginTop="20dp"
@@ -105,7 +106,7 @@
             android:id="@+id/text_department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="73dp"
+            android:layout_marginStart="75dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/color_white_smoke"
             android:textSize="@dimen/sp_16"

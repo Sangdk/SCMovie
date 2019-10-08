@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     @Override
     protected void initAct() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frame_container,mFragSearch);
+        transaction.add(R.id.frame_container, mFragSearch);
         transaction.add(R.id.frame_container, mFragHome);
         transaction.show(mFragHome);
         binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         registerPages();
     }
 
-    private void showFragment(Fragment fmShow){
+    private void showFragment(Fragment fmShow) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.hide(mFragHome);
         transaction.hide(mFragSearch);
@@ -54,15 +54,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
 
     @Override
     public void sendTitle(String title, int totalPages) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frame_container, mFragAllMovie);
-        transaction.show(mFragAllMovie);
-        transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
-        transaction.commit();
         final Dialog mLoadingDialog = new Dialog(this);
         mLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mLoadingDialog.setContentView(R.layout.dialog_loading);
         mLoadingDialog.show();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (mFragAllMovie.isAdded()) {
+            transaction.remove(mFragAllMovie);
+        }
+        transaction.add(R.id.frame_container, mFragAllMovie);
+        transaction.show(mFragAllMovie);
+        transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
+        transaction.commit();
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
     }
 

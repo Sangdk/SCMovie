@@ -127,6 +127,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
 
                         }
                     });
+                    break;
                 case moviePopular:
                     ApiBuilder.getApi().getMoviesPopular(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
@@ -143,6 +144,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
 
                         }
                     });
+                    break;
                 case movieTopRated:
                     ApiBuilder.getApi().getMoviesTopRated(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
@@ -159,6 +161,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
 
                         }
                     });
+                    break;
             }
         }
 

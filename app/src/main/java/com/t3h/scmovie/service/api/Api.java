@@ -72,7 +72,8 @@ public interface Api {
     Call<People> getPeopleDetail(@Path("person_id") int personId,
                                  @Query("api_key") String apiKey);
 
-    @GET("search/multi")
+    @GET("search/movie")
     Call<MovieResponse> searchMovies(@Query("api_key") String apiKey,
-                                     @Query("query") String query);
+                                     @Query("query") String query,
+                                     @Query("page") int i);
 }

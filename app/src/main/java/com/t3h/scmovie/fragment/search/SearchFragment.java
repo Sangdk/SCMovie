@@ -1,6 +1,7 @@
 package com.t3h.scmovie.fragment.search;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.SearchView;
@@ -8,21 +9,31 @@ import android.widget.SearchView;
 import androidx.annotation.Nullable;
 
 import com.t3h.scmovie.R;
+import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.base.BaseAdapter;
 import com.t3h.scmovie.base.BaseFragment;
 import com.t3h.scmovie.databinding.FragmentSearchBinding;
+import com.t3h.scmovie.fragment.home.MovieItemClickListener;
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.MovieResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.t3h.scmovie.Const.API_KEY;
+import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 
-public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements SearchView.OnQueryTextListener {
+public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements
+        SearchView.OnQueryTextListener, MovieItemClickListener {
     private Dialog loadingDialog;
+    private int mCurrentPage = 1;
+    private List<Movie> movies = new ArrayList<>();
+    private String mCurrentQuery;
 
     @Override
     protected int getLayoutId() {
@@ -45,30 +56,63 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
     @Override
     public boolean onQueryTextSubmit(String s) {
+        String query = s.trim();
+        if (mCurrentQuery != null && !mCurrentQuery.equals(query)) {
+            movies.clear();
+        }
+        this.mCurrentQuery = query;
         loadingDialog.show();
-        ApiBuilder.getApi().searchMovies(API_KEY, s).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().searchMovies(API_KEY, query, 1).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                setData(response);
+                setData(response, query);
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
             }
         });
         return false;
     }
 
-    private void setData(Response<MovieResponse> response) {
+    private void setData(Response<MovieResponse> response, String query) {
         BaseAdapter<Movie> adapter = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
-        adapter.setData(response.body().getMovies());
+        if (response.body() != null) {
+            movies.addAll(response.body().getMovies());
+        }
+        adapter.setData(movies);
         binding.recyclerMoviesSearch.setAdapter(adapter);
+        adapter.setListener(this);
+        int totalPages = response.body().getTotalPages();
+        adapter.setOnBottomReachedListener(() -> {
+            if (mCurrentPage < totalPages) {
+                mCurrentPage++;
+                ApiBuilder.getApi().searchMovies(API_KEY, query, mCurrentPage).enqueue(new Callback<MovieResponse>() {
+                    @Override
+                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                        movies.addAll(response.body().getMovies());
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
         loadingDialog.dismiss();
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
+        startActivity(intent);
     }
 }
