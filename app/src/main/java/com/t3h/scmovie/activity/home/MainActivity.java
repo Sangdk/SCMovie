@@ -4,13 +4,18 @@ import android.app.Dialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
+import com.t3h.scmovie.fragment.account.AccountFragment;
+import com.t3h.scmovie.fragment.account.LoginFragment;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
@@ -18,29 +23,46 @@ import com.t3h.scmovie.fragment.search.SearchFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll, View.OnClickListener {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
+        View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
     private SearchFragment mFragSearch = new SearchFragment();
+    private AccountFragment mFragAccount = new AccountFragment();
+    private LoginFragment mFragLogin = new LoginFragment();
     private List<Button> buttons = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
+    private boolean isLogin = false;
 
     @Override
     protected void initAct() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frame_container, mFragSearch);
-        transaction.add(R.id.frame_container, mFragHome);
-        transaction.show(mFragHome);
+        fragments.add(mFragLogin);
+        fragments.add(mFragHome);
+        fragments.add(mFragSearch);
+        fragments.add(mFragAccount);
+        addFragment(mFragAccount);
+        addFragment(mFragHome);
+        showFragment(mFragHome);
         binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
-        transaction.commit();
         registerPages();
+    }
+
+    private void addFragment(Fragment fmAdd) {
+        if (!fmAdd.isAdded()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.frame_container, fmAdd);
+            transaction.commit();
+        }
     }
 
     private void showFragment(Fragment fmShow) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.hide(mFragHome);
-        transaction.hide(mFragSearch);
-        transaction.hide(mFragAllMovie);
+        for (int i = 0; i < fragments.size(); i++) {
+            if (fragments.get(i).isAdded()) {
+                transaction.hide(fragments.get(i));
+            }
+        }
         transaction.show(fmShow);
         transaction.commit();
     }
@@ -90,6 +112,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_home:
+                addFragment(mFragHome);
                 showFragment(mFragHome);
                 setFocus(binding.btnHome);
                 break;
@@ -97,12 +120,34 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
                 setFocus(binding.btnTv);
                 break;
             case R.id.btn_search:
+                addFragment(mFragSearch);
                 showFragment(mFragSearch);
                 setFocus(binding.btnSearch);
                 break;
             case R.id.btn_account:
+                if (!isLogin) {
+                    addFragment(mFragLogin);
+                    showFragment(mFragLogin);
+                } else {
+                    addFragment(mFragAccount);
+                    showFragment(mFragAccount);
+                }
                 setFocus(binding.btnAccount);
                 break;
         }
+    }
+
+    @Override
+    public void showAccountScreen(GoogleSignInAccount account, GoogleSignInClient signInClient) {
+        showFragment(mFragAccount);
+        mFragAccount.setData(account, signInClient);
+        isLogin = true;
+    }
+
+    @Override
+    public void signOut() {
+        showFragment(mFragLogin);
+        Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+        isLogin = false;
     }
 }

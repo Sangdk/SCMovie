@@ -5,7 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.home.MainActivity">
+        tools:context=".activity.home.MainActivity"
+        android:background="@drawable/bg_screen">
 
         <FrameLayout
             android:id="@+id/frame_container"
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/black"
+            android:background="@android:color/transparent"
             android:orientation="horizontal">
 
             <Button
@@ -26,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/black"
+                android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_home"
                 android:text="@string/title_home_main"
                 android:textAllCaps="false"
@@ -41,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/black"
+                android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_live_tv"
                 android:text="@string/title_tv" />
 
@@ -52,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/black"
+                android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_search"
                 android:text="@string/title_search"
                 android:textAllCaps="false"
@@ -64,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@android:color/black"
+                android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_person"
                 android:text="@string/title_account"
                 android:textAllCaps="false"

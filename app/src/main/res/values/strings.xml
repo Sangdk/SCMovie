@@ -31,4 +31,9 @@
     <string name="title_home_main">Trang chủ</string>
     <string name="query_hint">Tìm kiếm ở đây...</string>
     <string name="title_account">Tài khoản</string>
+    <string name="signIn">Đăng nhập và trải nghiệm</string>
+    <string name="introduce">Giới thiệu</string>
+    <string name="support_center">Trung tâm hỗ trợ</string>
+    <string name="log_out">Đăng xuất</string>
+    <string name="title_hi">Hi</string>
 </resources>

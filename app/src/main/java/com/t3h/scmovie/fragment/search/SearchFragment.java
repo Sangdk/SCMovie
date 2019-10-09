@@ -42,7 +42,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
     @Override
     public String getTitle() {
-        return "Search Fragment";
+        return "Search Screen";
     }
 
     @Override

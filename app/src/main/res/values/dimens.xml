@@ -26,4 +26,5 @@
     <dimen name="dp_350">350dp</dimen>
     <dimen name="dp_300">300dp</dimen>
     <dimen name="dp_280">280dp</dimen>
+    <dimen name="sp_18">18sp</dimen>
 </resources>

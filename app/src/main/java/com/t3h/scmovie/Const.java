@@ -8,4 +8,5 @@ public interface Const {
     String BASE_THUMBNAIL_PATH = "https://img.youtube.com/vi/%s/hqdefault.jpg";
     String EXTRA_PERSON_ID = "person_id";
     String EXTRA_PERSON = "person_movie";
+    int GOOGLE_SIGN_IN = 101;
 }

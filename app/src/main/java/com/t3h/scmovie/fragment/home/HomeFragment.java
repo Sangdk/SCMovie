@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private void initToolBar() {
         binding.appBarLayout.addOnOffsetChangedListener(
                 (appBarLayout, verticalOffset) -> {
-                    if (Math.abs(verticalOffset) > 700) {
+                    if (Math.abs(verticalOffset) > 300) {
                         binding.collapsingToolbar.setTitleEnabled(true);
                         binding.collapsingToolbar.setTitle("Home");
                         binding.viewPager.setVisibility(View.GONE);
@@ -156,9 +156,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
                     }
                 }
         );
-        binding.viewPager.setPadding(150, 40, 150, 20);
+        binding.viewPager.setPadding(100, 40, 100, 20);
         binding.viewPager.setClipToPadding(false);
-        binding.viewPager.setPageMargin(40);
+        binding.viewPager.setPageMargin(30);
     }
 
     private void initDataForActor(Response<PeopleResponse> response) {
@@ -198,7 +198,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         }
         mSlideAdapter.setMovies(mSlideMovies);
         binding.viewPager.setAdapter(mSlideAdapter);
-        mCurrentSlide = 2;
+        mCurrentSlide = 1;
         initSlideTimer();
         mSlideAdapter.setListener(this);
     }
@@ -231,7 +231,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     @Override
     public String getTitle() {
-        return "Home";
+        return "Home Screen";
     }
 
     @Override
