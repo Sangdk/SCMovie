@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
-        View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut {
+        View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
+        AllMovieFragment.OnBackPress {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
@@ -106,6 +107,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
         transaction.commit();
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
+        binding.linearPages.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -149,5 +151,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         showFragment(mFragLogin);
         Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
         isLogin = false;
+    }
+
+    @Override
+    public void onAllMovieFragmentBackPress() {
+        binding.linearPages.setVisibility(View.VISIBLE);
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -37,6 +37,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.textName.setText(name);
         Glide.with(binding.imgAvatar)
                 .load(uri)
+                .thumbnail(Glide.with(binding.imgAvatar).load(R.drawable.image_prepare))
                 .into(binding.imgAvatar);
         binding.textLogOut.setOnClickListener(view -> {
             signInClient.signOut().addOnCompleteListener(task -> {

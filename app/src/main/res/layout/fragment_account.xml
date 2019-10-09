@@ -12,7 +12,7 @@
             android:layout_width="@dimen/dp_65"
             android:layout_height="@dimen/dp_65"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_200"
+            android:layout_marginTop="@dimen/dp_170"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background" />
 
@@ -30,7 +30,7 @@
                 android:layout_marginRight="@dimen/dp_4"
                 android:text="@string/title_hi"
                 android:textColor="@color/color_orange_mango_tango"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/sp_26"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,11 +40,12 @@
                 android:layout_marginTop="@dimen/dp_4"
                 android:text="iked"
                 android:textColor="@color/color_orange_mango_tango"
-                android:textSize="@dimen/sp_16"
+                android:textSize="@dimen/sp_26"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_title"
@@ -53,7 +54,7 @@
             android:orientation="vertical">
 
             <TextView
-
+                android:textSize="@dimen/sp_20"
                 android:id="@+id/text_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
                 android:textColor="@color/color_white" />
 
             <TextView
+                android:textSize="@dimen/sp_20"
                 android:id="@+id/text_introduce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
                 android:textColor="@color/color_white" />
 
             <TextView
+                android:textSize="@dimen/sp_20"
                 android:id="@+id/text_support_center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,6 +81,7 @@
                 android:textColor="@color/color_white" />
 
             <TextView
+                android:textSize="@dimen/sp_20"
                 android:id="@+id/text_log_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

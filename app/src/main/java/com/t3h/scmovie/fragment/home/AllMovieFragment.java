@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.activity.detail.MovieDetailActivity;
 import com.t3h.scmovie.base.BaseAdapter;
@@ -29,6 +31,7 @@ import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     private List<Movie> moviesAll = new ArrayList<>();
     private Dialog mLoadingDialog;
+    private OnBackPress mCallback;
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +41,12 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     @Override
     public String getTitle() {
         return "All Movie";
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallback = (OnBackPress) context;
     }
 
     public void setData(String title, Context context, int total, Dialog mLoadingDialog) {
@@ -187,6 +196,17 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     public void onDestroy() {
         super.onDestroy();
         moviesAll.clear();
+        mCallback.onAllMovieFragmentBackPress();
         Log.d("AllMovieFrag", "on destroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
+
+    public interface OnBackPress{
+        void onAllMovieFragmentBackPress();
     }
 }
