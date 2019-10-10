@@ -5,28 +5,42 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
         android:layout_marginBottom="@dimen/dp_50"
+        android:background="@drawable/bg_screen"
         android:paddingTop="@dimen/dp_20">
 
         <SearchView
-            android:layout_margin="@dimen/dp_30"
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
             android:background="@drawable/bg_search_view"
             android:iconifiedByDefault="false"
             android:queryHint="@string/query_hint" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_movies_search"
-            android:paddingLeft="@dimen/dp_13"
-            tools:listitem="@layout/item_vertical_movie"
             android:layout_marginTop="@dimen/dp_13"
-            android:layout_width="match_parent"
+            android:id="@+id/recycler_search_by"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/search_view"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/item_search_by" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_items_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_search_by"
+            android:layout_marginTop="@dimen/dp_13"
+            android:paddingLeft="@dimen/dp_13"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3" />
+            app:spanCount="3"
+            tools:listitem="@layout/item_vertical_movie" />
     </RelativeLayout>
 </layout>

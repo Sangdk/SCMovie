@@ -104,7 +104,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
             final String movieTopRated = "Phim nổi bật";
             switch (title) {
                 case movieUpComing:
-                    ApiBuilder.getApi().getMoviesUpComing(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
+                    ApiBuilder.getApi().getMoviesUpComing(i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             if (response.body() != null) {
@@ -121,7 +121,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
                     });
                     break;
                 case movieNowPlaying:
-                    ApiBuilder.getApi().getMoviesNowPlaying(mLang, i, API_KEY).enqueue(new Callback<MovieResponse>() {
+                    ApiBuilder.getApi().getMoviesNowPlaying(i, API_KEY).enqueue(new Callback<MovieResponse>() {
                         @Override
                         public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                             if (response.body() != null) {
@@ -206,7 +206,7 @@ public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
         mCallback = null;
     }
 
-    public interface OnBackPress{
+    public interface OnBackPress {
         void onAllMovieFragmentBackPress();
     }
 }

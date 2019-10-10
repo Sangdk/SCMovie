@@ -1,6 +1,10 @@
 package com.t3h.scmovie.activity.home;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -19,13 +23,15 @@ import com.t3h.scmovie.fragment.account.LoginFragment;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
         View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
-        AllMovieFragment.OnBackPress {
+        AllMovieFragment.OnBackPress, InternetConnectivityListener {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
@@ -35,9 +41,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     private List<Button> buttons = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
     private boolean isLogin = false;
+    private boolean isDisconnect = false;
 
     @Override
     protected void initAct() {
+//        InternetAvailabilityChecker.init(this);
+//        InternetAvailabilityChecker mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+//        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
+        init();
+    }
+
+    private void init() {
         fragments.add(mFragLogin);
         fragments.add(mFragHome);
         fragments.add(mFragSearch);
@@ -54,6 +68,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.frame_container, fmAdd);
             transaction.commit();
+            if (fmAdd instanceof HomeFragment) {
+                transaction.addToBackStack("Add Fragment");
+            }
+        }
+    }
+
+    private void removeFrag(Fragment fmRemove) {
+        if (fmRemove.isAdded()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.remove(fmRemove);
+            transaction.commit();
         }
     }
 
@@ -66,6 +91,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         }
         transaction.show(fmShow);
         transaction.commit();
+        transaction.addToBackStack("Show fragment");
     }
 
     private void registerPages() {
@@ -149,7 +175,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     @Override
     public void signOut() {
         showFragment(mFragLogin);
-        Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.log_out_success, Toast.LENGTH_SHORT).show();
         isLogin = false;
     }
 
@@ -158,6 +184,30 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         binding.linearPages.setVisibility(View.VISIBLE);
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setVisibility(View.VISIBLE);
+        }
+    }
+
+//    private Boolean isOnline() {
+//        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo ni = cm.getActiveNetworkInfo();
+//        if (ni != null && ni.isConnected()) {
+//            return true;
+//        }
+//        return false;
+//    }
+
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+        if (!isConnected) {
+            isDisconnect = true;
+            removeFrag(mFragAccount);
+            removeFrag(mFragAllMovie);
+            removeFrag(mFragHome);
+            removeFrag(mFragLogin);
+            removeFrag(mFragSearch);
+            Toast.makeText(this, "Kiểm tra kết nối mạng của bạn và thử lại", Toast.LENGTH_SHORT).show();
+        } else if (isConnected && isDisconnect){
+            init();
         }
     }
 }

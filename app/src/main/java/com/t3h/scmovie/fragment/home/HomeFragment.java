@@ -22,8 +22,12 @@ import com.t3h.scmovie.databinding.FragmentHomeBinding;
 import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,7 +43,7 @@ import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         MovieItemClickListener, SlideAdapter.OnClickSlideListener,
-        PeopleItemClickListener, View.OnClickListener {
+        PeopleItemClickListener, View.OnClickListener, InternetConnectivityListener {
     private List<Movie> data = new ArrayList<>();
     private BaseAdapter<Movie> mAdapterNowPlaying;
     private BaseAdapter<Movie> mAdapterUpComing;
@@ -48,7 +52,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private BaseAdapter<People> mAdapterActorPopular;
     private SlideAdapter mSlideAdapter;
     private static final long PERIOD_TIME_SLIDE = 2000;
-    private static final long DELAY_TIME_SLIDE = 1500;
+    private static final long DELAY_TIME_SLIDE = 1000;
     private List<Movie> mSlideMovies = new ArrayList<>();
     private int mCurrentSlide = 0;
     private LoadAll mCallback;
@@ -56,6 +60,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private int totalPagesUpComing = 0;
     private int totalPagesPopular = 0;
     private int totalPagesTopRated = 0;
+    private final Timer t = new Timer();
+    private boolean isConnectedInternet = true;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -66,12 +72,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mAdapterTopRated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterActorPopular = new BaseAdapter<>(getContext(), R.layout.item_people);
         initToolBar();
+        initDataForSlide();
         String mLang = "vi";
-        ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().getMoviesNowPlaying(1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataNowPlaying(response);
-                initDataForSlide();
             }
 
             @Override
@@ -80,7 +86,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             }
         });
 
-        ApiBuilder.getApi().getMoviesUpComing(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
+        ApiBuilder.getApi().getMoviesUpComing(1, API_KEY).enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataUpComing(response);
@@ -128,6 +134,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         });
         binding.viewPager.setVisibility(View.VISIBLE);
         registerListener();
+
+//        subscriberInternetListener();
+    }
+
+    private void subscriberInternetListener() {
+        InternetAvailabilityChecker mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
     }
 
     private void registerListener() {
@@ -186,37 +199,56 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     private void initDataNowPlaying(Response<MovieResponse> response) {
         mAdapterNowPlaying.setData(response.body().getMovies());
-        data = response.body().getMovies();
         totalPagesNowPlaying = response.body().getTotalPages();
         binding.recyclerNowPlaying.setAdapter(mAdapterNowPlaying);
     }
 
     private void initDataForSlide() {
         mSlideAdapter = new SlideAdapter(getContext());
-        for (int i = 0; i < 9; i++) {
-            mSlideMovies.add(data.get(i));
-        }
-        mSlideAdapter.setMovies(mSlideMovies);
-        binding.viewPager.setAdapter(mSlideAdapter);
-        mCurrentSlide = 1;
-        initSlideTimer();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String date = dateFormat.format(calendar.getTime());
+
+        ApiBuilder.getApi().getMoviesForSlide(API_KEY, date).enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                data = response.body().getMovies();
+                for (int i = 0; i < 9; i++) {
+                    mSlideMovies.add(data.get(i));
+                }
+                mSlideAdapter.setMovies(mSlideMovies);
+                binding.viewPager.setAdapter(mSlideAdapter);
+                mCurrentSlide = 1;
+                initSlideTimer();
+            }
+
+            @Override
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+            }
+        });
         mSlideAdapter.setListener(this);
     }
 
     private void initSlideTimer() {
-        final Handler handler = new Handler();
-        final Runnable update = () -> {
-            if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
-                mCurrentSlide = 0;
+        if (binding.viewPager.getAdapter() != null) {
+            final Handler handler = new Handler();
+            final Runnable update = () -> {
+                if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
+                    mCurrentSlide = 0;
+                }
+                binding.viewPager.setCurrentItem(mCurrentSlide++, true);
+            };
+            if (isConnectedInternet) {
+                t.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+
+                        handler.post(update);
+                    }
+                }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
             }
-            binding.viewPager.setCurrentItem(mCurrentSlide++, true);
-        };
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
+        }
     }
 
     @Override
@@ -281,6 +313,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
                 mCallback.sendTitle(getResources()
                         .getString(R.string.movie_top_rated), totalPagesTopRated);
                 break;
+        }
+    }
+
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+        if (!isConnected) {
+            t.cancel();
+            this.isConnectedInternet = false;
         }
     }
 

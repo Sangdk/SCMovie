@@ -15,6 +15,9 @@ public class PeopleResponse {
     @SerializedName("crew")
     private List<People> crews;
 
+    @SerializedName("total_pages")
+    private int mTotalPages;
+
     public List<People> getCasts() {
         return casts;
     }
@@ -26,4 +29,9 @@ public class PeopleResponse {
     public List<People> getPeople() {
         return people;
     }
+
+    public int getTotalPages() {
+        return mTotalPages;
+    }
+
 }

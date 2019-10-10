@@ -6,7 +6,7 @@
     <string name="famous_actor">Famous actor</string>
     <string name="category_name">Category Name</string>
     <string name="text_more">more</string>
-    <string name="movie_name">movie name</string>
+    <string name="movie_name">tên phim</string>
     <string name="movie_up_coming">Phim sắp chiếu</string>
     <string name="movie_now_playing">Phim đang chiếu</string>
     <string name="movie_popular">Nhiều người xem</string>
@@ -36,4 +36,9 @@
     <string name="support_center">Trung tâm hỗ trợ</string>
     <string name="log_out">Đăng xuất</string>
     <string name="title_hi">Hi</string>
+    <string name="log_out_success">\"Đăng xuất thành công\"</string>
+    <string name="famous_person">người nổi tiếng</string>
+    <string name="key_word">từ khóa</string>
+    <string name="product_company">công ty sản xuất</string>
+    <string name="collection">bộ sưu tập</string>
 </resources>
