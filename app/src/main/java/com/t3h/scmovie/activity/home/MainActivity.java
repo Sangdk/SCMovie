@@ -19,8 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
-import com.t3h.scmovie.fragment.account.AccountFragment;
-import com.t3h.scmovie.fragment.account.LoginFragment;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
@@ -32,7 +30,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
         View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
         AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener {
-=======
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -53,12 +50,10 @@ import com.t3h.scmovie.fragment.search.SearchFragment;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll, View.OnClickListener {
 
->>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
     private SearchFragment mFragSearch = new SearchFragment();
-<<<<<<< HEAD
     private AccountFragment mFragAccount = new AccountFragment();
     private LoginFragment mFragLogin = new LoginFragment();
     private List<Button> buttons = new ArrayList<>();
@@ -134,7 +129,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
             buttons.get(i).setTextColor(getResources().getColor(R.color.color_white));
         }
         btnFocus.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
-=======
 
     private NavigationView mNavigationView;
     private DrawerLayout drawerLayout;
@@ -181,7 +175,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         binding.btnTv.setOnClickListener(this);
         binding.btnSearch.setOnClickListener(this);
 
->>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     }
 
     @Override
@@ -189,7 +182,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         return R.layout.activity_main;
     }
 
-<<<<<<< HEAD
     @Override
     public void sendTitle(String title, int totalPages) {
         final Dialog mLoadingDialog = new Dialog(this);
@@ -201,7 +193,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         if (mFragAllMovie.isAdded()) {
             transaction.remove(mFragAllMovie);
         }
-=======
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        if (toggle.onOptionsItemSelected(item)){
@@ -230,28 +221,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     @Override
     public void sendTitle(String title, int totalPages) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
->>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
         transaction.add(R.id.frame_container, mFragAllMovie);
         transaction.show(mFragAllMovie);
         transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
         transaction.commit();
-<<<<<<< HEAD
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
         binding.linearPages.setVisibility(View.INVISIBLE);
-=======
         final Dialog mLoadingDialog = new Dialog(this);
         mLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mLoadingDialog.setContentView(R.layout.dialog_loading);
         mLoadingDialog.show();
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
->>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_home:
-<<<<<<< HEAD
                 addFragment(mFragHome);
                 showFragment(mFragHome);
                 setFocus(binding.btnHome);
@@ -321,7 +307,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         Toast.makeText(this, R.string.check_your_internet_and_try_again, Toast.LENGTH_SHORT).show();
         isDisconnect = true;
     }
-=======
                 showFragment(mFragHome);
                 binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
                 binding.btnSearch.setTextColor(getResources().getColor(R.color.color_white));
@@ -335,5 +320,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
                 break;
         }
     }
->>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 }
