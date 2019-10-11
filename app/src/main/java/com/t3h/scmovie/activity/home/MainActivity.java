@@ -1,11 +1,8 @@
 package com.t3h.scmovie.activity.home;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
         View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
-        AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener{
+        AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
@@ -54,9 +51,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
 
     private void init() {
         fragments.add(mFragLogin);
-        fragments.add(mFragHome);
         fragments.add(mFragSearch);
         fragments.add(mFragAccount);
+        fragments.add(mFragHome);
         addFragment(mFragAccount);
         addFragment(mFragHome);
         showFragment(mFragHome);
@@ -68,10 +65,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         if (!fmAdd.isAdded()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.frame_container, fmAdd);
-            transaction.commit();
             if (fmAdd instanceof HomeFragment) {
-                transaction.addToBackStack("Add Fragment");
+//                transaction.addToBackStack("Add Fragment");
             }
+            transaction.commit();
         }
     }
 
@@ -85,14 +82,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
 
     private void showFragment(Fragment fmShow) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.show(fmShow);
+        if (fmShow instanceof HomeFragment) {
+//            transaction.addToBackStack("Show fragment");
+        }
         for (int i = 0; i < fragments.size(); i++) {
             if (fragments.get(i).isAdded()) {
-                transaction.hide(fragments.get(i));
+                hideFragment(fragments.get(i));
             }
         }
-        transaction.show(fmShow);
         transaction.commit();
-        transaction.addToBackStack("Show fragment");
+    }
+
+    private void hideFragment(Fragment fmHide) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.hide(fmHide);
+        if (fmHide instanceof HomeFragment) {
+//            transaction.addToBackStack("Hide Fragment");
+        }
+        transaction.commit();
     }
 
     private void registerPages() {
