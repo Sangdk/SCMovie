@@ -13,4 +13,22 @@
     <dimen name="dp_2">2dp</dimen>
     <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+<<<<<<< Updated upstream
+=======
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="dp_65">65dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp__8">-8dp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+    <dimen name="dp_350">350dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_280">280dp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="dp_33">33dp</dimen>
+>>>>>>> Stashed changes
 </resources>

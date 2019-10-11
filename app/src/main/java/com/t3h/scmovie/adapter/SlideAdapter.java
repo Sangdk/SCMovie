@@ -18,7 +18,7 @@ import com.t3h.scmovie.databinding.ItemSlideBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
+public class SlideAdapter extends PagerAdapter {
     private List<Movie> mMovies = new ArrayList<>();
     private LayoutInflater inflater;
     private ItemSlideBinding mBinding;
@@ -37,7 +37,11 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.item_slide, container, false);
-        mBinding.imageSlide.setOnClickListener(this);
+        mBinding.imageSlide.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onClickSlide(mMovies.get(position));
+            }
+        });
         bindData(mMovies.get(position));
         container.addView(mBinding.getRoot());
         return mBinding.getRoot();
@@ -68,8 +72,17 @@ public class SlideAdapter extends PagerAdapter implements View.OnClickListener {
         return view == object;
     }
 
+<<<<<<< Updated upstream
     @Override
     public void onClick(View view) {
 
+=======
+    public void setListener(OnClickSlideListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClickSlideListener {
+        void onClickSlide(Movie movie);
+>>>>>>> Stashed changes
     }
 }
