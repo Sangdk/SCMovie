@@ -21,7 +21,15 @@
         <activity android:name=".activity.home.MainActivity" />
         <activity android:name=".activity.detail.MovieDetailActivity" />
         <activity android:name=".activity.detail.PeopleDetailActivity" />
+        <receiver android:name=".service.InternetReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 </manifest>

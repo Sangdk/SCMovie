@@ -10,10 +10,11 @@
         tools:context=".ui.movie_detail.MovieDetailActivity">
 
         <androidx.appcompat.widget.Toolbar
+            android:background="@android:color/black"
             android:id="@+id/toolbar"
             android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
-            android:layout_marginTop="@dimen/dp_24"
+            android:layout_height="@dimen/dp_33"
+            android:layout_marginTop="@dimen/dp_20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

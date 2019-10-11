@@ -2,6 +2,7 @@ package com.t3h.scmovie.activity.home;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -23,15 +24,14 @@ import com.t3h.scmovie.fragment.account.LoginFragment;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
-import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
-import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
+import com.t3h.scmovie.service.InternetReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
         View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
-        AllMovieFragment.OnBackPress, InternetConnectivityListener {
+        AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener{
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
@@ -42,12 +42,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     private List<Fragment> fragments = new ArrayList<>();
     private boolean isLogin = false;
     private boolean isDisconnect = false;
+    private InternetReceiver receiver = new InternetReceiver();
 
     @Override
     protected void initAct() {
-//        InternetAvailabilityChecker.init(this);
-//        InternetAvailabilityChecker mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
-//        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(receiver, filter);
         init();
     }
 
@@ -187,27 +188,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         }
     }
 
-//    private Boolean isOnline() {
-//        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo ni = cm.getActiveNetworkInfo();
-//        if (ni != null && ni.isConnected()) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     @Override
-    public void onInternetConnectivityChanged(boolean isConnected) {
-        if (!isConnected) {
-            isDisconnect = true;
-            removeFrag(mFragAccount);
-            removeFrag(mFragAllMovie);
-            removeFrag(mFragHome);
-            removeFrag(mFragLogin);
-            removeFrag(mFragSearch);
-            Toast.makeText(this, "Kiểm tra kết nối mạng của bạn và thử lại", Toast.LENGTH_SHORT).show();
-        } else if (isConnected && isDisconnect){
+    public void onConnected() {
+        if (isDisconnect) {
             init();
         }
+    }
+
+    @Override
+    public void onDisconnected() {
+        removeFrag(mFragHome);
+        removeFrag(mFragSearch);
+        removeFrag(mFragLogin);
+        removeFrag(mFragAccount);
+        Toast.makeText(this, R.string.check_your_internet_and_try_again, Toast.LENGTH_SHORT).show();
+        isDisconnect = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }

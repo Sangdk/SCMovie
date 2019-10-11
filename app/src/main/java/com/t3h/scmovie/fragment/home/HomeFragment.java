@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,6 @@ import com.t3h.scmovie.databinding.FragmentHomeBinding;
 import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
-import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
-import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         MovieItemClickListener, SlideAdapter.OnClickSlideListener,
-        PeopleItemClickListener, View.OnClickListener, InternetConnectivityListener {
+        PeopleItemClickListener, View.OnClickListener {
     private List<Movie> data = new ArrayList<>();
     private BaseAdapter<Movie> mAdapterNowPlaying;
     private BaseAdapter<Movie> mAdapterUpComing;
@@ -51,8 +50,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private BaseAdapter<Movie> mAdapterTopRated;
     private BaseAdapter<People> mAdapterActorPopular;
     private SlideAdapter mSlideAdapter;
-    private static final long PERIOD_TIME_SLIDE = 2000;
-    private static final long DELAY_TIME_SLIDE = 1000;
+    private static final long PERIOD_TIME_SLIDE = 4000;
+    private static final long DELAY_TIME_SLIDE = 2000;
     private List<Movie> mSlideMovies = new ArrayList<>();
     private int mCurrentSlide = 0;
     private LoadAll mCallback;
@@ -61,7 +60,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private int totalPagesPopular = 0;
     private int totalPagesTopRated = 0;
     private final Timer t = new Timer();
-    private boolean isConnectedInternet = true;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -134,13 +132,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         });
         binding.viewPager.setVisibility(View.VISIBLE);
         registerListener();
-
-//        subscriberInternetListener();
-    }
-
-    private void subscriberInternetListener() {
-        InternetAvailabilityChecker mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
-        mInternetAvailabilityChecker.addInternetConnectivityListener(this);
     }
 
     private void registerListener() {
@@ -231,24 +222,21 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     private void initSlideTimer() {
-        if (binding.viewPager.getAdapter() != null) {
-            final Handler handler = new Handler();
-            final Runnable update = () -> {
-                if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
-                    mCurrentSlide = 0;
-                }
-                binding.viewPager.setCurrentItem(mCurrentSlide++, true);
-            };
-            if (isConnectedInternet) {
-                t.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-
-                        handler.post(update);
-                    }
-                }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
+        final Handler handler = new Handler();
+        final Runnable update = () -> {
+            if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
+                mCurrentSlide = 0;
             }
-        }
+            binding.viewPager.setCurrentItem(mCurrentSlide++, true);
+        };
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (binding.viewPager.getAdapter() != null) {
+                    handler.post(update);
+                }
+            }
+        }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
     }
 
     @Override
@@ -274,11 +262,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     @Override
-    public void onClickSlide() {
-        Movie movie = null;
-        if (mCurrentSlide > 0) {
-            movie = mSlideMovies.get(mCurrentSlide - 1);
-        }
+    public void onClickSlide(Movie movie) {
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
         startActivity(intent);
@@ -316,14 +300,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         }
     }
 
-    @Override
-    public void onInternetConnectivityChanged(boolean isConnected) {
-        if (!isConnected) {
-            t.cancel();
-            this.isConnectedInternet = false;
-        }
-    }
-
     public interface LoadAll {
         void sendTitle(String title, int totalPage);
     }
@@ -342,6 +318,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     @Override
     public void onDetach() {
         mCallback = null; // => avoid leaking
+        Log.d("Home fragment", " on detach");
         super.onDetach();
     }
 }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.home.MainActivity"
-        android:background="@drawable/bg_screen">
+        android:background="@drawable/bg_screen"
+        tools:context=".activity.home.MainActivity">
 
         <FrameLayout
             android:id="@+id/frame_container"
@@ -23,9 +23,9 @@
 
             <Button
                 android:id="@+id/btn_home"
-                android:layout_marginBottom="@dimen/dp__10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp__10"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_home"
@@ -36,40 +36,41 @@
 
             <Button
                 android:id="@+id/btn_tv"
-                android:layout_marginBottom="@dimen/dp__10"
-                android:textStyle="bold"
-                android:textColor="@color/color_white"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp__10"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_live_tv"
-                android:text="@string/title_tv" />
+                android:text="@string/title_tv"
+                android:textColor="@color/color_white"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_search"
-                android:layout_marginBottom="@dimen/dp__10"
-                android:textStyle="bold"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp__10"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_search"
                 android:text="@string/title_search"
                 android:textAllCaps="false"
-                android:textColor="@color/color_white" />
+                android:textColor="@color/color_white"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/btn_account"
-                android:layout_marginBottom="@dimen/dp__10"
-                android:textStyle="bold"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp__10"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:drawableTop="@drawable/ic_person"
                 android:text="@string/title_account"
                 android:textAllCaps="false"
-                android:textColor="@color/color_white" />
+                android:textColor="@color/color_white"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 </layout>
