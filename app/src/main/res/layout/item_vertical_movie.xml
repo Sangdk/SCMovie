@@ -1,36 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.t3h.scmovie.model.Movie" />
+
+        <variable
+            name="listener"
+            type="com.t3h.scmovie.fragment.home.MovieItemClickListener" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:onClick="@{v->listener.onMovieClick(item)}"
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10">
 
         <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_200"
             app:cardCornerRadius="@dimen/dp_8"
             app:cardElevation="@dimen/dp_5"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="@dimen/dp_190"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"
                     android:id="@+id/img_poster"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="@dimen/dp_170"
+                    android:scaleType="centerCrop"
+                    app:thumb="@{item.posterPath}" />
+
+
                 <TextView
-                    android:padding="@dimen/dp_2"
+                    android:id="@+id/text_title"
                     android:layout_alignParentBottom="true"
-                    android:text="@string/movie_name"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_20"/>
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@id/img_poster"
+                    android:background="@android:color/black"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="@dimen/dp_2"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@{item.title}"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

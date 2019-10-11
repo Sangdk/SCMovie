@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SC Movie</string>
-    <string name="title_home">home</string>
+    <string name="title_home">Home</string>
     <string name="title_favorite">favorite</string>
     <string name="title_user">user</string>
     <string name="famous_actor">Famous actor</string>
@@ -8,8 +8,12 @@
     <string name="text_more">more</string>
 <<<<<<< Updated upstream
     <string name="movie_name">movie name</string>
+<<<<<<< HEAD
 =======
     <string name="movie_name">tên phim</string>
+=======
+    <string name="tv_genre">Genres</string>
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     <string name="movie_up_coming">Phim sắp chiếu</string>
     <string name="movie_now_playing">Phim đang chiếu</string>
     <string name="movie_popular">Nhiều người xem</string>
@@ -28,11 +32,28 @@
     <string name="place_birth">Nơi sinh</string>
     <string name="department">Vai trò</string>
     <string name="list_movie">Các bộ phim đã tham gia</string>
+<<<<<<< HEAD
+=======
+
+    <string name="nav_header_desc">Navigation Header</string>
+    <string name="nav_header_title">SC Movie</string>
+    <string name="give_5_star_now">Rate 5 stars</string>
+    <string name="my_downloads">Favorite</string>
+    <string name="my_account">My account</string>
+    <string name="reset_movie">Reset movie</string>
+    <string name="add_favorite">Favorite</string>
+    <string name="feedback">Feedback</string>
+    <string name="home">Home</string>
+    <string name="navigation_drawer_open">Open_navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
+
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     <string name="load_all">tất cả</string>
     <string name="title_tv">TV</string>
     <string name="title_search">Tìm kiếm</string>
     <string name="title_home_main">Trang chủ</string>
     <string name="query_hint">Tìm kiếm ở đây...</string>
+<<<<<<< HEAD
     <string name="title_account">Tài khoản</string>
     <string name="signIn">Đăng nhập và trải nghiệm</string>
     <string name="introduce">Giới thiệu</string>
@@ -46,4 +67,7 @@
     <string name="collection">bộ sưu tập</string>
     <string name="check_your_internet_and_try_again">Kiểm tra kết nối mạng của bạn và thử lại</string>
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 </resources>

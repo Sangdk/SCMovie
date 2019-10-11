@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 public abstract class BaseFragment<BD extends ViewDataBinding> extends Fragment {
 
@@ -21,6 +22,7 @@ public abstract class BaseFragment<BD extends ViewDataBinding> extends Fragment 
         binding = DataBindingUtil.inflate(inflater,getLayoutId(),container,false);
         return binding.getRoot();
     }
+
 
     protected abstract int getLayoutId();
 

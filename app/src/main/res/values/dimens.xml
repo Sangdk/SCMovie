@@ -8,13 +8,18 @@
     <dimen name="dp_120">120dp</dimen>
     <dimen name="dp_170">170dp</dimen>
     <dimen name="dp_5">5dp</dimen>
-    <dimen name="dp_190">190dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+
+    <dimen name="dp_190">190dp</dimen>
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     <dimen name="dp_30">30dp</dimen>
     <dimen name="dp_4">4dp</dimen>
     <dimen name="sp_12">12sp</dimen>
@@ -23,6 +28,7 @@
     <dimen name="dp_70">70dp</dimen>
     <dimen name="dp_24">24dp</dimen>
     <dimen name="dp_100">100dp</dimen>
+<<<<<<< HEAD
     <dimen name="dp__8">-8dp</dimen>
     <dimen name="dp_13">13dp</dimen>
     <dimen name="dp_350">350dp</dimen>
@@ -31,4 +37,12 @@
     <dimen name="sp_18">18sp</dimen>
     <dimen name="dp_33">33dp</dimen>
 >>>>>>> Stashed changes
+=======
+
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="nav_header_height">220dp</dimen>
+
+    <dimen name="dp__10">-10dp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 </resources>

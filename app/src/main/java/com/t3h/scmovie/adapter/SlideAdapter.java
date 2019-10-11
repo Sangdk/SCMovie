@@ -10,9 +10,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
-import com.t3h.scmovie.Const;
+import com.t3h.scmovie.utils.Const;
 import com.t3h.scmovie.R;
-import com.t3h.scmovie.data.model.Movie;
+import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.databinding.ItemSlideBinding;
 
 import java.util.ArrayList;
@@ -22,14 +22,14 @@ public class SlideAdapter extends PagerAdapter {
     private List<Movie> mMovies = new ArrayList<>();
     private LayoutInflater inflater;
     private ItemSlideBinding mBinding;
+    private OnClickSlideListener listener;
 
     public SlideAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
 
     public void setMovies(List<Movie> mMovies) {
-        mMovies.clear();
-        mMovies.addAll(mMovies);
+        this.mMovies = mMovies;
         notifyDataSetChanged();
     }
 
@@ -49,10 +49,10 @@ public class SlideAdapter extends PagerAdapter {
 
     private void bindData(Movie movie) {
         Glide.with(mBinding.imageSlide)
-                .load(Const.BASE_IMAGE_URL + movie.getmPosterPath())
+                .load(Const.BASE_IMAGE_URL + movie.getBackdropPath())
                 .into(mBinding.imageSlide);
-        mBinding.textTitle.setText(movie.getmTitle());
-        mBinding.textReleaseDate.setText(movie.getmReleaseDate());
+        mBinding.textTitle.setText(movie.getTitle());
+        mBinding.textReleaseDate.setText(movie.getReleaseDate());
     }
 
     @Override
@@ -66,16 +66,27 @@ public class SlideAdapter extends PagerAdapter {
         container.removeView(v);
     }
 
-
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+    public void setListener(OnClickSlideListener listener) {
+        this.listener = listener;
+    }
+
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     @Override
     public void onClick(View view) {
+        if (listener != null) {
+            listener.onClickSlide();
+        }
+    }
 
+<<<<<<< HEAD
 =======
     public void setListener(OnClickSlideListener listener) {
         this.listener = listener;
@@ -84,5 +95,9 @@ public class SlideAdapter extends PagerAdapter {
     public interface OnClickSlideListener {
         void onClickSlide(Movie movie);
 >>>>>>> Stashed changes
+=======
+    public interface OnClickSlideListener {
+        void onClickSlide();
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     }
 }

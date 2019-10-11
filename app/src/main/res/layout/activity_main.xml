@@ -1,31 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        tools:context=".activity.home.MainActivity">-->
+
+<!--        <androidx.drawerlayout.widget.DrawerLayout-->
+<!--            android:id="@+id/drawer_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fitsSystemWindows="true"-->
+<!--            tools:openDrawer="start">-->
+
+<!--&lt;!&ndash;            <include&ndash;&gt;-->
+<!--&lt;!&ndash;                layout="@layout/app_bar_main"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="match_parent" />&ndash;&gt;-->
+
+<!--            <com.google.android.material.navigation.NavigationView-->
+<!--                android:id="@+id/nav_view"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:fitsSystemWindows="true"-->
+<!--                app:headerLayout="@layout/nav_header_main"-->
+<!--                app:menu="@menu/activity_main_navigation" />-->
+
+<!--        </androidx.drawerlayout.widget.DrawerLayout>-->
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frame_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+<!--    </LinearLayout>-->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         tools:context=".activity.MainActivity">
 =======
         android:background="@drawable/bg_screen"
         tools:context=".activity.home.MainActivity">
 >>>>>>> Stashed changes
+=======
+        tools:context=".activity.home.MainActivity">
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 
         <FrameLayout
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation"
-            android:background="#FFF3F3"
-            app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/menu_navigation"
+        <LinearLayout
+            android:id="@+id/linear_pages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btn_home"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_home"
+                android:text="@string/title_home_main"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_tv"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:textStyle="bold"
+                android:textColor="@color/color_white"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_live_tv"
+                android:text="@string/title_tv" />
+
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
             <Button
@@ -80,5 +144,20 @@
                 android:textStyle="bold" />
         </LinearLayout>
 >>>>>>> Stashed changes
+=======
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_marginBottom="@dimen/dp__10"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/black"
+                android:drawableTop="@drawable/ic_search"
+                android:text="@string/title_search"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white" />
+        </LinearLayout>
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     </RelativeLayout>
 </layout>

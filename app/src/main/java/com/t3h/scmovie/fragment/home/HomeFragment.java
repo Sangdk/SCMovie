@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -24,9 +27,13 @@ import com.t3h.scmovie.service.api.ApiBuilder;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
 
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+=======
+import java.util.ArrayList;
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,10 +42,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+<<<<<<< HEAD
 import static com.t3h.scmovie.Const.API_KEY;
 import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
 import static com.t3h.scmovie.Const.EXTRA_PERSON;
 import static com.t3h.scmovie.Const.EXTRA_PERSON_ID;
+=======
+import static com.t3h.scmovie.utils.Const.API_KEY;
+import static com.t3h.scmovie.utils.Const.EXTRA_MOVIE_ID;
+import static com.t3h.scmovie.utils.Const.EXTRA_PERSON;
+import static com.t3h.scmovie.utils.Const.EXTRA_PERSON_ID;
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         MovieItemClickListener, SlideAdapter.OnClickSlideListener,
@@ -50,8 +64,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private BaseAdapter<Movie> mAdapterTopRated;
     private BaseAdapter<People> mAdapterActorPopular;
     private SlideAdapter mSlideAdapter;
+<<<<<<< HEAD
     private static final long PERIOD_TIME_SLIDE = 4000;
     private static final long DELAY_TIME_SLIDE = 2000;
+=======
+    private static final long PERIOD_TIME_SLIDE = 2000;
+    private static final long DELAY_TIME_SLIDE = 100;
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     private List<Movie> mSlideMovies = new ArrayList<>();
     private int mCurrentSlide = 0;
     private LoadAll mCallback;
@@ -59,7 +78,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private int totalPagesUpComing = 0;
     private int totalPagesPopular = 0;
     private int totalPagesTopRated = 0;
+<<<<<<< HEAD
     private final Timer t = new Timer();
+=======
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -69,6 +91,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         mAdapterMoviePopular = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterTopRated = new BaseAdapter<>(getContext(), R.layout.item_vertical_movie);
         mAdapterActorPopular = new BaseAdapter<>(getContext(), R.layout.item_people);
+<<<<<<< HEAD
         initToolBar();
         initDataForSlide();
         String mLang = "vi";
@@ -76,6 +99,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataNowPlaying(response);
+=======
+
+        initToolBar();
+        String mLang = "vi";
+
+        ApiBuilder.getApi().getMoviesNowPlaying(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
+            @Override
+            public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                initDataNowPlaying(response);
+                initDataForSlide();
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
             }
 
             @Override
@@ -84,7 +118,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             }
         });
 
+<<<<<<< HEAD
         ApiBuilder.getApi().getMoviesUpComing(1, API_KEY).enqueue(new Callback<MovieResponse>() {
+=======
+        ApiBuilder.getApi().getMoviesUpComing(mLang, 1, API_KEY).enqueue(new Callback<MovieResponse>() {
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 initDataUpComing(response);
@@ -148,6 +186,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     private void initToolBar() {
+<<<<<<< HEAD
         binding.appBarLayout.addOnOffsetChangedListener(
                 (appBarLayout, verticalOffset) -> {
                     if (Math.abs(verticalOffset) > 300) {
@@ -163,6 +202,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
         binding.viewPager.setPadding(100, 40, 100, 20);
         binding.viewPager.setClipToPadding(false);
         binding.viewPager.setPageMargin(30);
+=======
+//        binding.appBarLayout.addOnOffsetChangedListener(
+//                (appBarLayout, verticalOffset) -> {
+//                    if (Math.abs(verticalOffset) > 200) {
+//                        binding.collapsingToolbar.setTitleEnabled(true);
+//                        binding.collapsingToolbar.setTitle("Home");
+//                        binding.viewPager.setVisibility(View.GONE);
+//                    } else {
+//                        binding.collapsingToolbar.setTitleEnabled(false);
+//                        binding.viewPager.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//        );
+        binding.viewPager.setPadding(80, 40, 80, 20);
+        binding.viewPager.setClipToPadding(false);
+        binding.viewPager.setPageMargin(40);
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     }
 
     private void initDataForActor(Response<PeopleResponse> response) {
@@ -190,12 +246,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     private void initDataNowPlaying(Response<MovieResponse> response) {
         mAdapterNowPlaying.setData(response.body().getMovies());
+<<<<<<< HEAD
+=======
+        data = response.body().getMovies();
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
         totalPagesNowPlaying = response.body().getTotalPages();
         binding.recyclerNowPlaying.setAdapter(mAdapterNowPlaying);
     }
 
     private void initDataForSlide() {
         mSlideAdapter = new SlideAdapter(getContext());
+<<<<<<< HEAD
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(calendar.getTime());
@@ -218,6 +279,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
             }
         });
+=======
+        for (int i = 0; i < 5; i++) {
+            mSlideMovies.add(data.get(i));
+        }
+        mSlideAdapter.setMovies(mSlideMovies);
+        binding.viewPager.setAdapter(mSlideAdapter);
+        initSlideTimer();
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
         mSlideAdapter.setListener(this);
     }
 
@@ -229,12 +298,19 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
             }
             binding.viewPager.setCurrentItem(mCurrentSlide++, true);
         };
+<<<<<<< HEAD
         t.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (binding.viewPager.getAdapter() != null) {
                     handler.post(update);
                 }
+=======
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
             }
         }, DELAY_TIME_SLIDE, PERIOD_TIME_SLIDE);
     }
@@ -251,7 +327,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
 
     @Override
     public String getTitle() {
+<<<<<<< HEAD
         return "Home Screen";
+=======
+        return "Home";
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
     }
 
     @Override
@@ -262,7 +342,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     @Override
+<<<<<<< HEAD
     public void onClickSlide(Movie movie) {
+=======
+    public void onClickSlide() {
+        Movie movie = null;
+        if (mCurrentSlide > 0) {
+            movie = mSlideMovies.get(mCurrentSlide - 1);
+        }
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(EXTRA_MOVIE_ID, movie.getId());
         startActivity(intent);
@@ -318,7 +406,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     @Override
     public void onDetach() {
         mCallback = null; // => avoid leaking
+<<<<<<< HEAD
         Log.d("Home fragment", " on detach");
+=======
+>>>>>>> 2ff38bc526ba24c83760719456e91f2c7c915d01
         super.onDetach();
     }
 }
