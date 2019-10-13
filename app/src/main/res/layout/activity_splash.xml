@@ -3,19 +3,19 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@android:color/black"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/img_logo"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo_movie"
-            android:layout_width="@dimen/_125sdp"
-            android:layout_height="@dimen/_96sdp" />
-        <ProgressBar
-            android:id="@+id/prg_bar"
-            android:paddingTop="@dimen/_20sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:src="@drawable/lg_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+<!--        <ProgressBar-->
+<!--            android:id="@+id/prg_bar"-->
+<!--            android:paddingTop="@dimen/_20sdp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 </layout>

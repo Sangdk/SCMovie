@@ -2,6 +2,7 @@ package com.t3h.scmovie.service.api;
 
 import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.model.People;
+import com.t3h.scmovie.model.tv.TV;
 import com.t3h.scmovie.service.response.GenreResponse;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
@@ -111,4 +112,9 @@ public interface Api {
     @GET("search/multi")
     Call<MovieResponse> searchMovies(@Query("api_key") String apiKey,
                                      @Query("query") String query);
+
+    @GET("/tv/{tv_id}")
+    Call<TV> getTVShow(@Path("id") int tvId,
+                       @Query("api_key") String apiKey,
+                       @Query("language") String lang);
 }

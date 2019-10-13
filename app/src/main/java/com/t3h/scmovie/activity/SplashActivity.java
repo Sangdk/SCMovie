@@ -25,12 +25,12 @@ public class SplashActivity extends Activity {
     }
 
     protected void initAct() {
-        prg = findViewById(R.id.prg_bar);
-        Animation animation = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.translate);
-        ImageView img = findViewById(R.id.img_logo);
-        animation.reset();
-        img.clearAnimation();
-        img.startAnimation(animation);
+//        prg = findViewById(R.id.prg_bar);
+//        Animation animation = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.translate);
+//        ImageView img = findViewById(R.id.img_logo);
+//        animation.reset();
+//        img.clearAnimation();
+//        img.startAnimation(animation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

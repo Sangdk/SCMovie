@@ -19,7 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.t3h.scmovie.Const.API_KEY;
+import static com.t3h.scmovie.utils.Const.API_KEY;
+
 
 public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements SearchView.OnQueryTextListener {
     private Dialog loadingDialog;

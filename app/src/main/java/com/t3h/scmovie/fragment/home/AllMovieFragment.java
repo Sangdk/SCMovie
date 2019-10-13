@@ -23,8 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.t3h.scmovie.Const.API_KEY;
-import static com.t3h.scmovie.Const.EXTRA_MOVIE_ID;
+import static com.t3h.scmovie.utils.Const.API_KEY;
+import static com.t3h.scmovie.utils.Const.EXTRA_MOVIE_ID;
 
 public class AllMovieFragment extends BaseFragment<FragmentMovieAllBinding> {
     private List<Movie> moviesAll = new ArrayList<>();
