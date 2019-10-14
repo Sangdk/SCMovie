@@ -3,16 +3,19 @@ package com.t3h.scmovie.activity.home;
 import android.app.Dialog;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.t3h.scmovie.R;
 import com.t3h.scmovie.base.BaseActivity;
 import com.t3h.scmovie.databinding.ActivityMainBinding;
@@ -27,15 +30,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements HomeFragment.LoadAll,
-        View.OnClickListener, LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
-        AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener {
+        LoginFragment.LoginSuccess, AccountFragment.OnSignOut,
+        AllMovieFragment.OnBackPress, InternetReceiver.OnInternetConnectListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
 
     private HomeFragment mFragHome = new HomeFragment();
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
     private SearchFragment mFragSearch = new SearchFragment();
     private AccountFragment mFragAccount = new AccountFragment();
     private LoginFragment mFragLogin = new LoginFragment();
-    private List<Button> buttons = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
     private boolean isLogin = false;
     private boolean isDisconnect = false;
@@ -57,8 +60,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         addFragment(mFragAccount);
         addFragment(mFragHome);
         showFragment(mFragHome);
-        binding.btnHome.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
         registerPages();
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(this);
     }
 
     private void addFragment(Fragment fmAdd) {
@@ -104,21 +108,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     }
 
     private void registerPages() {
-        buttons.add(binding.btnHome);
-        buttons.add(binding.btnSearch);
-        buttons.add(binding.btnAccount);
-        buttons.add(binding.btnTv);
-        binding.btnHome.setOnClickListener(this);
-        binding.btnTv.setOnClickListener(this);
-        binding.btnSearch.setOnClickListener(this);
-        binding.btnAccount.setOnClickListener(this);
-    }
 
-    private void setFocus(Button btnFocus) {
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setTextColor(getResources().getColor(R.color.color_white));
-        }
-        btnFocus.setTextColor(getResources().getColor(R.color.color_orange_mango_tango));
     }
 
     @Override
@@ -142,36 +132,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         transaction.addToBackStack(AllMovieFragment.class.getSimpleName());
         transaction.commit();
         mFragAllMovie.setData(title, this, totalPages, mLoadingDialog);
-        binding.linearPages.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_home:
-                addFragment(mFragHome);
-                showFragment(mFragHome);
-                setFocus(binding.btnHome);
-                break;
-            case R.id.btn_tv:
-                setFocus(binding.btnTv);
-                break;
-            case R.id.btn_search:
-                addFragment(mFragSearch);
-                showFragment(mFragSearch);
-                setFocus(binding.btnSearch);
-                break;
-            case R.id.btn_account:
-                if (!isLogin) {
-                    addFragment(mFragLogin);
-                    showFragment(mFragLogin);
-                } else {
-                    addFragment(mFragAccount);
-                    showFragment(mFragAccount);
-                }
-                setFocus(binding.btnAccount);
-                break;
-        }
     }
 
     @Override
@@ -190,10 +150,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
 
     @Override
     public void onAllMovieFragmentBackPress() {
-        binding.linearPages.setVisibility(View.VISIBLE);
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -217,5 +174,31 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                addFragment(mFragHome);
+                showFragment(mFragHome);
+                break;
+            case R.id.navigation_tv:
+                break;
+            case R.id.navigation_search:
+                addFragment(mFragSearch);
+                showFragment(mFragSearch);
+                break;
+            case R.id.navigation_account:
+                if (!isLogin) {
+                    addFragment(mFragLogin);
+                    showFragment(mFragLogin);
+                } else {
+                    addFragment(mFragAccount);
+                    showFragment(mFragAccount);
+                }
+                break;
+        }
+        return true;
     }
 }

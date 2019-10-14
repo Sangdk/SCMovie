@@ -14,7 +14,7 @@ public class AppBinding {
     public static void setThumb(ImageView im, String img) {
         Glide.with(im)
                 .load(BASE_IMAGE_URL + img)
-                .thumbnail(Glide.with(im).load(R.drawable.image_prepare))
+                .thumbnail(Glide.with(im).load(R.drawable.bg_screen))
                 .into(im);
     }
 
@@ -22,7 +22,7 @@ public class AppBinding {
     public static void setThumbTrailer(ImageView im, String key) {
         Glide.with(im)
                 .load(String.format(BASE_THUMBNAIL_PATH, key))
-                .thumbnail(Glide.with(im).load(R.drawable.image_prepare))
+                .thumbnail(Glide.with(im).load(R.drawable.bg_screen))
                 .into(im);
     }
 }

@@ -224,7 +224,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     private void initSlideTimer() {
         final Handler handler = new Handler();
         final Runnable update = () -> {
-            if (mCurrentSlide == binding.viewPager.getAdapter().getCount()) {
+            if (mCurrentSlide == 9) {
                 mCurrentSlide = 0;
             }
             binding.viewPager.setCurrentItem(mCurrentSlide++, true);
