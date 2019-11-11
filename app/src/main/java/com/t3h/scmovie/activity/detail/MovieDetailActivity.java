@@ -172,6 +172,24 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("MovieDetailActivity","on Stop");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("MovieDetailActivity","on Pause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MovieDetailActivity","on Destroy");
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
     }

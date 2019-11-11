@@ -216,4 +216,10 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         intent.putExtra(EXTRA_PERSON, jsonMovies);
         startActivity(intent);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        searchByItems.clear();
+    }
 }
