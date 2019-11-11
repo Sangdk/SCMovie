@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_login"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_200"
+            android:text="@string/signIn"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/sp_26"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_title"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/btn_facebook_sign_in"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:src="@drawable/ic_facebook_logo" />
+
+            <FrameLayout
+                android:id="@+id/frame_google_sign_in"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <ImageView
+                    android:id="@+id/img_google_sign_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_google_plus" />
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
