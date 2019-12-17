@@ -195,7 +195,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements
     }
 
     private void initDataForSlide() {
-        mSlideAdapter = new SlideAdapter(getContext());
+        mSlideAdapter = new SlideAdapter(getContext(),"movie");
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = dateFormat.format(calendar.getTime());

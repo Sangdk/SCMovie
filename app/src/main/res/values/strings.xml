@@ -42,4 +42,7 @@
     <string name="product_company">công ty sản xuất</string>
     <string name="collection">bộ sưu tập</string>
     <string name="check_your_internet_and_try_again">Kiểm tra kết nối mạng của bạn và thử lại</string>
+    <string name="tv_airing_today">Lên sóng hôm nay</string>
+    <string name="tv_on_the_air">Đang phát sóng</string>
+    <string name="tv_top_rated">Chương trình nổi bật</string>
 </resources>

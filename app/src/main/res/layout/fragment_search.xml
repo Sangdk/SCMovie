@@ -28,8 +28,8 @@
             android:layout_below="@id/search_view"
             android:layout_marginLeft="@dimen/dp_30"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="3"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             tools:listitem="@layout/item_search_by" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -4,6 +4,7 @@ import com.t3h.scmovie.model.Movie;
 import com.t3h.scmovie.model.People;
 import com.t3h.scmovie.service.response.PeopleResponse;
 import com.t3h.scmovie.service.response.MovieResponse;
+import com.t3h.scmovie.service.response.TVResponse;
 import com.t3h.scmovie.service.response.VideoResponse;
 
 import retrofit2.Call;
@@ -83,4 +84,13 @@ public interface Api {
     @GET("discover/movie")
     Call<MovieResponse> getMoviesForSlide(@Query("api_key") String apiKey,
                                           @Query("primary_release_date.gte") String date);
+
+    @GET("tv/popular")
+    Call<TVResponse> getTVPopular(@Query("api_key") String apiKey,
+                                  @Query("language") String lang,
+                                  @Query("page") int page);
+    @GET("tv/airing_today")
+    Call<TVResponse> getTVAiringToday(@Query("api_key") String apiKey,
+                                  @Query("language") String lang,
+                                  @Query("page") int page);
 }

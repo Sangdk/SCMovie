@@ -133,17 +133,19 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         int totalPages = response.body().getTotalPages();
         adapter.setOnBottomReachedListener(() -> {
             if (mCurrentPage < totalPages) {
+                loadingDialog.show();
                 mCurrentPage++;
                 ApiBuilder.getApi().searchPerson(API_KEY, query, mCurrentPage).enqueue(new Callback<PeopleResponse>() {
                     @Override
                     public void onResponse(Call<PeopleResponse> call, Response<PeopleResponse> response) {
                         persons.addAll(response.body().getPeople());
                         adapter.notifyDataSetChanged();
+                        loadingDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<PeopleResponse> call, Throwable t) {
-
+                        loadingDialog.dismiss();
                     }
                 });
             }
@@ -163,17 +165,19 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         int totalPages = response.body().getTotalPages();
         adapter.setOnBottomReachedListener(() -> {
             if (mCurrentPage < totalPages) {
+                loadingDialog.show();
                 mCurrentPage++;
                 ApiBuilder.getApi().searchMovies(API_KEY, query, mCurrentPage).enqueue(new Callback<MovieResponse>() {
                     @Override
                     public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                         movies.addAll(response.body().getMovies());
                         adapter.notifyDataSetChanged();
+                        loadingDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                        loadingDialog.dismiss();
                     }
                 });
             }

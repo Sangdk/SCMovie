@@ -23,6 +23,7 @@ import com.t3h.scmovie.fragment.account.AccountFragment;
 import com.t3h.scmovie.fragment.account.LoginFragment;
 import com.t3h.scmovie.fragment.home.AllMovieFragment;
 import com.t3h.scmovie.fragment.home.HomeFragment;
+import com.t3h.scmovie.fragment.home.TVFragment;
 import com.t3h.scmovie.fragment.search.SearchFragment;
 import com.t3h.scmovie.service.InternetReceiver;
 
@@ -38,10 +39,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
     private AllMovieFragment mFragAllMovie = new AllMovieFragment();
     private SearchFragment mFragSearch = new SearchFragment();
     private AccountFragment mFragAccount = new AccountFragment();
+    private TVFragment mFragTV = new TVFragment();
     private LoginFragment mFragLogin = new LoginFragment();
     private List<Fragment> fragments = new ArrayList<>();
-    private boolean isLogin = false;
-    private boolean isDisconnect = false;
+    private static boolean isLogin = false;
+    private static boolean isDisconnect = false;
     private InternetReceiver receiver = new InternetReceiver();
 
     @Override
@@ -56,6 +58,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
         fragments.add(mFragLogin);
         fragments.add(mFragSearch);
         fragments.add(mFragAccount);
+        fragments.add(mFragTV);
         fragments.add(mFragHome);
         addFragment(mFragAccount);
         addFragment(mFragHome);
@@ -184,6 +187,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements H
                 showFragment(mFragHome);
                 break;
             case R.id.navigation_tv:
+                addFragment(mFragTV);
+                showFragment(mFragTV);
                 break;
             case R.id.navigation_search:
                 addFragment(mFragSearch);

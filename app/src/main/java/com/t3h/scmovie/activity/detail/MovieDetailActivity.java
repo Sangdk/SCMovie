@@ -92,6 +92,7 @@ public class MovieDetailActivity extends BaseActivity<ActivityMovieDetailBinding
         binding.viewPager.setPadding(10, 0, 80, 20);
         binding.viewPager.setClipToPadding(false);
         binding.viewPager.setPageMargin(20);
+        binding.viewPager.setOffscreenPageLimit(3);
     }
 
     private void getData() {
